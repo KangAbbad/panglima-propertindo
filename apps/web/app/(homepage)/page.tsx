@@ -1,10 +1,11 @@
 import { Header } from "@/components/landing-page/Header/Header";
-import { ReactNode } from "react";
+import { Hero } from "@/components/landing-page/Hero";
 
-export default function Page(): ReactNode {
+export default function Page() {
   return (
     <>
       <Header />
+      <Hero />
     </>
   );
 }

@@ -26,7 +26,7 @@ export function AuthNavigationLinks() {
       </Link>
       <Link
         href="/"
-        className="rounded-md bg-primary text-sm font-medium text-white hover:bg-green-600 py-2 px-3"
+        className="rounded-md bg-primary text-sm font-medium text-white hover:bg-green-700 py-2 px-3"
       >
         Masuk
       </Link>
@@ -78,7 +78,7 @@ export function MobileSidebar(props: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenu key={`${navItem.label}-${navIdx}`}>
             <SidebarMenuItem key={navItem.label}>
               <SidebarMenuButton asChild isActive={pathname === navItem.href}>
-                <a href={navItem.href}>{navItem.label}</a>
+                <Link href={navItem.href}>{navItem.label}</Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
