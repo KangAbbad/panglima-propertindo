@@ -9,10 +9,10 @@ import heroIcon4 from "@/assets/icons/hero-icon-4.svg";
 export function Hero() {
   return (
     <section className="relative">
-      <div className="relative overflow-hidden h-[542px]">
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white to-transparent w-[37vw] z-10" />
-        <div className="absolute -top-96 right-0 -bottom-28 left-32 bg-gradient-to-r from-white via-white to-transparent w-[50vw] z-10 transform rotate-45" />
-        <div className="absolute top-0 right-0 bottom-0 bg-gradient-to-r from-white/40 via-white/10 to-transparent w-[75vw] z-10" />
+      <div className="hidden md:block relative overflow-hidden h-[542px]">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#F4F4F5] via-[#F4F4F5] to-transparent w-[37vw] z-10" />
+        <div className="absolute -top-96 right-0 -bottom-28 left-32 bg-gradient-to-r from-[#F4F4F5] via-[#F4F4F5] to-transparent w-[50vw] z-10 transform rotate-45" />
+        <div className="absolute top-0 right-0 bottom-0 bg-gradient-to-r from-[#F4F4F5]/40 via-[#F4F4F5]/10 to-transparent w-[75vw] z-10" />
         <div className="absolute right-0">
           <div className="relative h-[80vh] w-[82vw]">
             <Image
@@ -70,6 +70,65 @@ export function Hero() {
               sekarang juga!
             </p>
             <button className="rounded-md bg-primary hover:bg-green-700 cursor-pointer text-white text-sm font-medium px-8 py-3 mt-10">
+              Daftar & Beli NUB
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="md:hidden relative overflow-hidden">
+        <div className="absolute inset-0 h-[87vh] w-screen">
+          <Image
+            src={heroCover}
+            alt="Panglima Propertindo"
+            fill
+            priority
+            className="object-cover"
+          />
+        </div>
+        <div className="absolute inset-0 bg-[#F4F4F5]/70 h-[87vh] w-screen" />
+        <div className="relative flex items-center h-[87vh] z-30">
+          <div className="p-4">
+            <h1 className="text-foreground text-3xl font-semibold leading-[45px]">
+              <span className="text-primary">Hidup Nyaman & Berkah</span> dengan
+              Properti <span className="mr-4">Syariah Kelas Dunia</span>
+              <span className="inline-flex -space-x-3 align-middle">
+                <Image
+                  src={heroIcon1}
+                  alt="icon-1"
+                  height={48}
+                  width={48}
+                  className="relative z-40"
+                />
+                <Image
+                  src={heroIcon2}
+                  alt="icon-2"
+                  height={48}
+                  width={48}
+                  className="relative z-30"
+                />
+                <Image
+                  src={heroIcon3}
+                  alt="icon-3"
+                  height={48}
+                  width={48}
+                  className="relative z-20"
+                />
+                <Image
+                  src={heroIcon4}
+                  alt="icon-4"
+                  height={48}
+                  width={48}
+                  className="relative z-10"
+                />
+              </span>
+            </h1>
+            <p className="text-sm text-secondary-foreground leading-6 mt-8">
+              Developer Properti Syariah terdepan menghadirkan solusi properti
+              tanpa riba dan sesuai prinsip syariah. Daftar dan booking sekarang
+              juga!
+            </p>
+            <button className="rounded-md bg-primary hover:bg-green-700 cursor-pointer text-white text-sm font-medium px-8 py-3 mt-9">
               Daftar & Beli NUB
             </button>
           </div>
