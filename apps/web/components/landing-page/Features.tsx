@@ -50,7 +50,7 @@ export function Features() {
   ];
 
   return (
-    <div className="relative bg-[#282835] py-20 px-[120px]">
+    <div className="relative bg-[#282835] pt-5 pb-10 px-4 md:py-20 md:px-[120px]">
       <Image
         src={featuresBgPattern}
         alt="features-bg-pattern"
@@ -59,8 +59,20 @@ export function Features() {
         className="object-cover"
       />
       <div className="relative z-10">
-        <div className="flex items-center gap-10">
-          <div className="flex-[1_0_auto]">
+        <div className="md:hidden">
+          <h1 className="text-white text-2xl font-semibold leading-8">
+            Kenapa Harus
+            <br />
+            <span className="text-[#FA9500]">Panglima Propertindo?</span>
+          </h1>
+          <p className="text-white text-sm leading-7 mt-5">
+            Dengan komitmen penuh pada prinsip-prinsip syariah, kami
+            menghadirkan properti berkualitas tinggi yang memberikan keamanan
+            dan keberkahan bagi Anda dan keluarga.
+          </p>
+        </div>
+        <div className="hidden md:flex items-center gap-10">
+          <div className="md:flex-[1_0_auto]">
             <h1 className="text-white text-3xl font-semibold leading-10">
               Kenapa Harus
               <br />
