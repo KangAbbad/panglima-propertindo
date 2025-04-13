@@ -86,7 +86,7 @@ export function Features() {
           </p>
         </div>
         <div className="mt-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {featureList.map((featureItem, featureIdx) => (
               <div
                 key={`${featureItem.title}-${featureIdx}`}

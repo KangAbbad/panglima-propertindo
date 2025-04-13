@@ -81,7 +81,7 @@ export function Projects() {
       <p className="text-muted-foreground text-sm md:text-base leading-7 mt-4">
         Berikut adalah daftar project dari Panglima Propertindo
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-10 mt-5 md:mt-10">
         {projects.map((projectItem, projectIdx) => {
           const countUnitRest = projectItem.unitTypes.length - 3;
           return (
