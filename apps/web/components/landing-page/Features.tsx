@@ -100,8 +100,8 @@ export function Features() {
                       width={48}
                       height={48}
                     />
-                    <div className="absolute -right-1.5 -bottom-1.5 group-hover:left-1/2 group-hover:top-1/2 group-hover:-translate-x-1/2 group-hover:-translate-y-[55%] transition-transform duration-300">
-                      <div className="rounded-full border group-hover:border-transparent border-[#EF4444] bg-white group-hover:bg-transparent transition-all duration-300 h-6 group-hover:h-[30px] w-6 group-hover:w-[30px] p-1 group-hover:p-0">
+                    <div className="absolute -right-1.5 -bottom-1.5 group-hover:left-1/2 group-hover:top-1/2 group-hover:-translate-x-1/2 group-hover:-translate-y-[55%] transition-all duration-300">
+                      <div className="rounded-full border group-hover:border-transparent border-[#EF4444] bg-white group-hover:bg-transparent transition-all duration-200 h-6 group-hover:h-[30px] w-6 group-hover:w-[30px] p-1 group-hover:p-0">
                         <Image
                           src={redXIcon}
                           alt="red-x-icon"

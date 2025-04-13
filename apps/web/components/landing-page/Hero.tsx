@@ -10,9 +10,9 @@ export function Hero() {
   return (
     <section className="relative">
       <div className="hidden md:block relative overflow-hidden h-[542px]">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#F4F4F5] via-[#F4F4F5] to-transparent w-[37vw] z-10" />
-        <div className="absolute -top-96 right-0 -bottom-28 left-32 bg-gradient-to-r from-[#F4F4F5] via-[#F4F4F5] to-transparent w-[50vw] z-10 transform rotate-45" />
-        <div className="absolute top-0 right-0 bottom-0 bg-gradient-to-r from-[#F4F4F5]/40 via-[#F4F4F5]/10 to-transparent w-[75vw] z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-secondary via-secondary to-transparent w-[37vw] z-10" />
+        <div className="absolute -top-96 right-0 -bottom-28 left-32 bg-gradient-to-r from-secondary via-secondary to-transparent w-[50vw] z-10 transform rotate-45" />
+        <div className="absolute top-0 right-0 bottom-0 bg-gradient-to-r from-secondary/40 via-secondary/10 to-transparent w-[75vw] z-10" />
         <div className="absolute right-0">
           <div className="relative h-[80vh] w-[82vw]">
             <Image
@@ -86,7 +86,7 @@ export function Hero() {
             className="object-cover"
           />
         </div>
-        <div className="absolute inset-0 bg-[#F4F4F5]/70 h-[87vh] w-screen" />
+        <div className="absolute inset-0 bg-secondary/70 h-[87vh] w-screen" />
         <div className="relative flex items-center h-[87vh] z-30">
           <div className="p-4">
             <h1 className="text-foreground text-3xl font-semibold leading-[45px]">
