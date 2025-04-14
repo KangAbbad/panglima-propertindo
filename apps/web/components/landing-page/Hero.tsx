@@ -1,10 +1,34 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
+import { cn } from "@workspace/ui/lib/utils";
+import HouseIcon from "@/assets/icons/house-icon.svg";
+import GraveIcon from "@/assets/icons/grave-icon.svg";
+import MapLocationIcon from "@/assets/icons/map-location-icon.svg";
+import ParkIcon from "@/assets/icons/park-icon.svg";
 import heroCover from "@/assets/images/hero-cover.png";
-import HeroIcon1 from "@/assets/icons/hero-icon-1.svg";
-import HeroIcon2 from "@/assets/icons/hero-icon-2.svg";
-import HeroIcon3 from "@/assets/icons/hero-icon-3.svg";
-import HeroIcon4 from "@/assets/icons/hero-icon-4.svg";
+import heroBgIcon1 from "@/assets/images/bg-hero-icon-1.jpg";
+import heroBgIcon2 from "@/assets/images/bg-hero-icon-2.jpg";
+import heroBgIcon3 from "@/assets/images/bg-hero-icon-3.jpg";
+import heroBgIcon4 from "@/assets/images/bg-hero-icon-4.jpg";
+
+type HeroIconProps = {
+  src: StaticImageData;
+  icon: React.ReactNode;
+  className?: string;
+};
+
+function HeroIcon(props: HeroIconProps) {
+  const { src, icon, className } = props;
+
+  return (
+    <div className={cn("relative rounded-full overflow-hidden", className)}>
+      <Image src={src} alt="hero-icon" fill priority className="object-cover" />
+      <div className="relative z-10 flex items-center justify-center h-full w-full">
+        {icon}
+      </div>
+    </div>
+  );
+}
 
 export function Hero() {
   return (
@@ -33,10 +57,26 @@ export function Hero() {
                 <br />
                 Syariah Kelas Dunia
                 <span className="inline-flex -space-x-3 ml-4 align-middle">
-                  <HeroIcon1 height={48} width={48} className="relative z-40" />
-                  <HeroIcon2 height={48} width={48} className="relative z-30" />
-                  <HeroIcon3 height={48} width={48} className="relative z-20" />
-                  <HeroIcon4 height={48} width={48} className="relative z-10" />
+                  <HeroIcon
+                    src={heroBgIcon1}
+                    icon={<HouseIcon height={16} width={16} />}
+                    className="h-[48px] w-[48px] z-40"
+                  />
+                  <HeroIcon
+                    src={heroBgIcon2}
+                    icon={<GraveIcon height={16} width={16} />}
+                    className="h-[48px] w-[48px] z-30"
+                  />
+                  <HeroIcon
+                    src={heroBgIcon3}
+                    icon={<MapLocationIcon height={16} width={16} />}
+                    className="h-[48px] w-[48px] z-20"
+                  />
+                  <HeroIcon
+                    src={heroBgIcon4}
+                    icon={<ParkIcon height={16} width={16} />}
+                    className="h-[48px] w-[48px] z-10"
+                  />
                 </span>
               </h1>
             </div>
@@ -73,10 +113,26 @@ export function Hero() {
                 <span className="mr-4">Syariah Kelas Dunia</span>
               </span>
               <span className="inline-flex -space-x-3 align-middle">
-                <HeroIcon1 height={48} width={48} className="relative z-40" />
-                <HeroIcon2 height={48} width={48} className="relative z-30" />
-                <HeroIcon3 height={48} width={48} className="relative z-20" />
-                <HeroIcon4 height={48} width={48} className="relative z-10" />
+                <HeroIcon
+                  src={heroBgIcon1}
+                  icon={<HouseIcon height={16} width={16} />}
+                  className="h-[48px] w-[48px] z-40"
+                />
+                <HeroIcon
+                  src={heroBgIcon2}
+                  icon={<GraveIcon height={16} width={16} />}
+                  className="h-[48px] w-[48px] z-30"
+                />
+                <HeroIcon
+                  src={heroBgIcon3}
+                  icon={<MapLocationIcon height={16} width={16} />}
+                  className="h-[48px] w-[48px] z-20"
+                />
+                <HeroIcon
+                  src={heroBgIcon4}
+                  icon={<ParkIcon height={16} width={16} />}
+                  className="h-[48px] w-[48px] z-10"
+                />
               </span>
             </h1>
             <p className="text-sm text-secondary-foreground leading-6 mt-8">
