@@ -86,7 +86,7 @@ export function GeneralFaq() {
                 {faqItem.title}
               </h2>
             </AccordionTrigger>
-            <AccordionContent className="p-4 md:py-8 md:px-6">
+            <AccordionContent className="p-4 pt-0 md:pb-8 md:px-6">
               <p className="text-base text-muted-foreground">
                 {faqItem.description}
               </p>
