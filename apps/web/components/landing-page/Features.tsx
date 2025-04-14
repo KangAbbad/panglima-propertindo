@@ -1,48 +1,48 @@
 import Image from "next/image";
 
 import featuresBgPattern from "@/assets/images/features-bg-pattern.png";
-import redXIcon from "@/assets/icons/red-x-icon.svg";
-import tanpaRibaIcon from "@/assets/icons/tanpa-riba-icon.svg";
-import tanpaKprBankIcon from "@/assets/icons/tanpa-kpr-bank.svg";
-import tanpaSitaIcon from "@/assets/icons/tanpa-sita-icon.svg";
-import tanpaDendaIcon from "@/assets/icons/tanpa-denda-icon.svg";
-import tanpaPenaltiIcon from "@/assets/icons/tanpa-penalti-icon.svg";
-import tanpaAkadBermasalahIcon from "@/assets/icons/tanpa-akad-bermasalah.svg";
+import RedXIcon from "@/assets/icons/red-x-icon.svg";
+import TanpaRibaIcon from "@/assets/icons/tanpa-riba-icon.svg";
+import TanpaKprBankIcon from "@/assets/icons/tanpa-kpr-bank.svg";
+import TanpaSitaIcon from "@/assets/icons/tanpa-sita-icon.svg";
+import TanpaDendaIcon from "@/assets/icons/tanpa-denda-icon.svg";
+import TanpaPenaltiIcon from "@/assets/icons/tanpa-penalti-icon.svg";
+import TanpaAkadBermasalahIcon from "@/assets/icons/tanpa-akad-bermasalah.svg";
 
 export function Features() {
   const featureList = [
     {
-      icon: tanpaRibaIcon,
+      icon: TanpaRibaIcon,
       title: "Tanpa Riba",
       description:
         "Semua transaksi kami bebas dari bunga (riba) dan dilakukan dengan kejelasan dan adil",
     },
     {
-      icon: tanpaKprBankIcon,
+      icon: TanpaKprBankIcon,
       title: "Tanpa KPR Bank",
       description:
         "Tanpa melibatkan pembiayaan bank konvensional, menghindari riba, gharar (ketidakpastian), dan maysir (spekulasi)",
     },
     {
-      icon: tanpaSitaIcon,
+      icon: TanpaSitaIcon,
       title: "Tanpa Sita",
       description:
         "Semua transaksi kami bebas dari bunga (riba) dan dilakukan dengan kejelasan dan adil",
     },
     {
-      icon: tanpaDendaIcon,
+      icon: TanpaDendaIcon,
       title: "Tanpa Denda",
       description:
         "Semua transaksi kami bebas dari bunga (riba) dan dilakukan dengan kejelasan dan adil",
     },
     {
-      icon: tanpaPenaltiIcon,
+      icon: TanpaPenaltiIcon,
       title: "Tanpa Penalti",
       description:
         "Semua transaksi kami bebas dari bunga (riba) dan dilakukan dengan kejelasan dan adil",
     },
     {
-      icon: tanpaAkadBermasalahIcon,
+      icon: TanpaAkadBermasalahIcon,
       title: "Tanpa Akad Bermasalah",
       description:
         "Semua transaksi kami bebas dari bunga (riba) dan dilakukan dengan kejelasan dan adil",
@@ -94,19 +94,10 @@ export function Features() {
               >
                 <div className="flex items-center gap-2">
                   <div className="relative">
-                    <Image
-                      src={featureItem.icon}
-                      alt={featureItem.title}
-                      width={48}
-                      height={48}
-                    />
-                    <div className="absolute -right-1.5 -bottom-1.5 group-hover:left-1/2 group-hover:top-1/2 group-hover:-translate-x-1/2 group-hover:-translate-y-[55%] transition-all duration-300">
+                    <featureItem.icon height={48} width={48} />
+                    <div className="absolute -right-1.5 -bottom-1.5 group-hover:left-1/2 group-hover:top-1/2 group-hover:-translate-x-1/4 group-hover:-translate-y-[25%] transition-all duration-300">
                       <div className="rounded-full border group-hover:border-transparent border-[#EF4444] bg-white group-hover:bg-transparent transition-all duration-200 h-6 group-hover:h-[30px] w-6 group-hover:w-[30px] p-1 group-hover:p-0">
-                        <Image
-                          src={redXIcon}
-                          alt="red-x-icon"
-                          className="group-hover:h-[30px] group-hover:w-[30px]"
-                        />
+                        <RedXIcon className="group-hover:scale-200" />
                       </div>
                     </div>
                   </div>

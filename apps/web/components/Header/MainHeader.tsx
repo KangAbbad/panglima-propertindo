@@ -3,7 +3,7 @@ import { PrimaryLogo } from "./PrimaryLogo";
 
 import { SidebarHamburger } from "@workspace/ui/components/sidebar";
 
-export function Header() {
+export function MainHeader() {
   return (
     <header className="w-full bg-white py-2">
       <div className="container mx-auto flex items-center justify-between px-4">

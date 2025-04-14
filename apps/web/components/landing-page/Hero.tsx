@@ -1,10 +1,10 @@
 import Image from "next/image";
 
 import heroCover from "@/assets/images/hero-cover.png";
-import heroIcon1 from "@/assets/icons/hero-icon-1.svg";
-import heroIcon2 from "@/assets/icons/hero-icon-2.svg";
-import heroIcon3 from "@/assets/icons/hero-icon-3.svg";
-import heroIcon4 from "@/assets/icons/hero-icon-4.svg";
+import HeroIcon1 from "@/assets/icons/hero-icon-1.svg";
+import HeroIcon2 from "@/assets/icons/hero-icon-2.svg";
+import HeroIcon3 from "@/assets/icons/hero-icon-3.svg";
+import HeroIcon4 from "@/assets/icons/hero-icon-4.svg";
 
 export function Hero() {
   return (
@@ -33,34 +33,10 @@ export function Hero() {
                 <br />
                 Syariah Kelas Dunia
                 <span className="inline-flex -space-x-3 ml-4 align-middle">
-                  <Image
-                    src={heroIcon1}
-                    alt="icon-1"
-                    height={48}
-                    width={48}
-                    className="relative z-40"
-                  />
-                  <Image
-                    src={heroIcon2}
-                    alt="icon-2"
-                    height={48}
-                    width={48}
-                    className="relative z-30"
-                  />
-                  <Image
-                    src={heroIcon3}
-                    alt="icon-3"
-                    height={48}
-                    width={48}
-                    className="relative z-20"
-                  />
-                  <Image
-                    src={heroIcon4}
-                    alt="icon-4"
-                    height={48}
-                    width={48}
-                    className="relative z-10"
-                  />
+                  <HeroIcon1 height={48} width={48} className="relative z-40" />
+                  <HeroIcon2 height={48} width={48} className="relative z-30" />
+                  <HeroIcon3 height={48} width={48} className="relative z-20" />
+                  <HeroIcon4 height={48} width={48} className="relative z-10" />
                 </span>
               </h1>
             </div>
@@ -89,38 +65,18 @@ export function Hero() {
         <div className="absolute inset-0 bg-secondary/70 h-[87vh] w-screen" />
         <div className="relative flex items-center h-[87vh] z-30">
           <div className="p-4">
-            <h1 className="text-foreground text-3xl font-semibold leading-[45px]">
-              <span className="text-primary">Hidup Nyaman & Berkah</span> dengan
-              Properti <span className="mr-4">Syariah Kelas Dunia</span>
+            <h1 className="text-3xl font-semibold leading-[45px]">
+              <span className="text-primary">Hidup Nyaman & Berkah</span>
+              <span className="text-foreground">
+                {" "}
+                dengan Properti{" "}
+                <span className="mr-4">Syariah Kelas Dunia</span>
+              </span>
               <span className="inline-flex -space-x-3 align-middle">
-                <Image
-                  src={heroIcon1}
-                  alt="icon-1"
-                  height={48}
-                  width={48}
-                  className="relative z-40"
-                />
-                <Image
-                  src={heroIcon2}
-                  alt="icon-2"
-                  height={48}
-                  width={48}
-                  className="relative z-30"
-                />
-                <Image
-                  src={heroIcon3}
-                  alt="icon-3"
-                  height={48}
-                  width={48}
-                  className="relative z-20"
-                />
-                <Image
-                  src={heroIcon4}
-                  alt="icon-4"
-                  height={48}
-                  width={48}
-                  className="relative z-10"
-                />
+                <HeroIcon1 height={48} width={48} className="relative z-40" />
+                <HeroIcon2 height={48} width={48} className="relative z-30" />
+                <HeroIcon3 height={48} width={48} className="relative z-20" />
+                <HeroIcon4 height={48} width={48} className="relative z-10" />
               </span>
             </h1>
             <p className="text-sm text-secondary-foreground leading-6 mt-8">

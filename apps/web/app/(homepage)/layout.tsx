@@ -2,7 +2,7 @@ import {
   SidebarProvider,
   SidebarInset,
 } from "@workspace/ui/components/sidebar";
-import { MobileSidebar } from "@/components/landing-page/Header/NavigationLinks";
+import { MobileSidebar } from "@/components/Header/NavigationLinks";
 
 export default function HomepageLayout({
   children,
