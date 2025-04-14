@@ -64,7 +64,7 @@ export function Hero() {
         </div>
         <div className="absolute inset-0 bg-secondary/70 h-[87vh] w-screen" />
         <div className="relative flex items-center h-[87vh] z-30">
-          <div className="p-4">
+          <div className="container px-4">
             <h1 className="text-3xl font-semibold leading-[45px]">
               <span className="text-primary">Hidup Nyaman & Berkah</span>
               <span className="text-foreground">

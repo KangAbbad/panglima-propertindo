@@ -104,69 +104,71 @@ export function Testimonial() {
   }, []);
 
   return (
-    <section className="bg-secondary/80 py-10 px-4 md:py-14 md:px-20">
-      <h1 className="text-foreground text-2xl font-semibold">
-        Ulasan dari Konsumen
-      </h1>
-      <div className="mt-8">
-        <Carousel>
-          <CarouselContent>
-            {testimonials.map((testimoniItem, testimoniIdx) => (
-              <CarouselItem
-                key={`${testimoniItem.name}-${testimoniIdx}`}
-                className="md:basis-1/3"
-              >
-                <Card className="shadow-none min-h-[344px]">
-                  <CardHeader>
-                    <div className="flex items-center gap-4">
-                      <div className="rounded-full overflow-hidden">
-                        <Image
-                          src={testimoniItem.avatar}
-                          alt={testimoniItem.name}
-                          height={56}
-                          width={56}
-                        />
-                      </div>
-                      <span className="text-lg text-foreground font-semibold">
-                        {testimoniItem.name}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 mt-6">
-                      {Array.from({ length: testimoniItem.star }).map(
-                        (_, idx) => (
-                          <Star
-                            key={idx}
-                            color="#FA9500"
-                            fill="#FA9500"
-                            size={16}
+    <section className="bg-secondary/80 py-10 px-4 md:py-14 md:px-0">
+      <div className="container mx-auto">
+        <h1 className="text-foreground text-2xl font-semibold">
+          Ulasan dari Konsumen
+        </h1>
+        <div className="mt-8">
+          <Carousel>
+            <CarouselContent>
+              {testimonials.map((testimoniItem, testimoniIdx) => (
+                <CarouselItem
+                  key={`${testimoniItem.name}-${testimoniIdx}`}
+                  className="md:basis-1/3"
+                >
+                  <Card className="shadow-none min-h-[344px]">
+                    <CardHeader>
+                      <div className="flex items-center gap-4">
+                        <div className="rounded-full overflow-hidden">
+                          <Image
+                            src={testimoniItem.avatar}
+                            alt={testimoniItem.name}
+                            height={56}
+                            width={56}
                           />
-                        )
-                      )}
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground leading-5">
-                      {testimoniItem.testimonial}
-                    </p>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          {dotCount > 0 && (
-            <div className="flex items-center justify-center gap-5 mt-12">
-              {Array.from({ length: dotCount }).map((_, idx) => (
-                <CarouselDotButton
-                  key={idx}
-                  number={idx}
-                  showPerSlide={showPerSlide}
-                  isActive={dotActiveNumber === idx * showPerSlide}
-                  onSelectDot={(number) => setDotActiveNumber(number)}
-                />
+                        </div>
+                        <span className="text-lg text-foreground font-semibold">
+                          {testimoniItem.name}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 mt-6">
+                        {Array.from({ length: testimoniItem.star }).map(
+                          (_, idx) => (
+                            <Star
+                              key={idx}
+                              color="#FA9500"
+                              fill="#FA9500"
+                              size={16}
+                            />
+                          )
+                        )}
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground leading-5">
+                        {testimoniItem.testimonial}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
               ))}
-            </div>
-          )}
-        </Carousel>
+            </CarouselContent>
+            {dotCount > 0 && (
+              <div className="flex items-center justify-center gap-5 mt-12">
+                {Array.from({ length: dotCount }).map((_, idx) => (
+                  <CarouselDotButton
+                    key={idx}
+                    number={idx}
+                    showPerSlide={showPerSlide}
+                    isActive={dotActiveNumber === idx * showPerSlide}
+                    onSelectDot={(number) => setDotActiveNumber(number)}
+                  />
+                ))}
+              </div>
+            )}
+          </Carousel>
+        </div>
       </div>
     </section>
   );
