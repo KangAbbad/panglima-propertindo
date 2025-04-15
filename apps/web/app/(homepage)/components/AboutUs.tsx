@@ -34,7 +34,7 @@ const portofolios: PortofolioItem[] = [
 
 export function AboutUs() {
   return (
-    <section className="bg-white py-10 px-4 md:py-20 md:px-0">
+    <section id="about-us" className="bg-white py-10 px-4 md:py-20 md:px-0">
       <div className="container space-y-5 md:space-y-10 mx-auto">
         <h1 className="text-foreground text-3xl font-semibold">Tentang Kami</h1>
         <div className="flex flex-col md:flex-row md:items-center gap-5">

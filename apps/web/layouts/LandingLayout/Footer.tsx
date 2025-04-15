@@ -23,13 +23,16 @@ export function Footer() {
             <h2 className="text-primary-foreground text-sm font-medium">
               Panglima Propertindo
             </h2>
-            <Link href="#" className="text-primary-foreground text-sm">
+            <Link href="#about-us" className="text-primary-foreground text-sm">
               Tentang Kami
             </Link>
-            <Link href="#" className="text-primary-foreground text-sm">
+            <Link href="#projects" className="text-primary-foreground text-sm">
               Project
             </Link>
-            <Link href="#" className="text-primary-foreground text-sm">
+            <Link
+              href="#general-faq"
+              className="text-primary-foreground text-sm"
+            >
               Pertanyaan Umum
             </Link>
           </div>

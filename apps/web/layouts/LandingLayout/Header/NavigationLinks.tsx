@@ -42,10 +42,10 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { label: "Beranda", href: "/" },
-  { label: "Project", href: "/project", isDropdown: true },
-  { label: "Tentang Kami", href: "/tentang-kami" },
-  { label: "Pertanyaan Umum", href: "/faq" },
-  { label: "Cara Booking", href: "/cara-booking" },
+  { label: "Project", href: "#projects", isDropdown: true },
+  { label: "Tentang Kami", href: "#about-us" },
+  { label: "Pertanyaan Umum", href: "#general-faq" },
+  { label: "Cara Booking", href: "#booking" },
 ];
 
 export function DesktopNavigationLinks() {

@@ -104,7 +104,10 @@ export function Testimonial() {
   }, []);
 
   return (
-    <section className="bg-secondary/80 py-10 px-4 md:py-14 md:px-0">
+    <section
+      id="testimonials"
+      className="bg-secondary/80 py-10 px-4 md:py-14 md:px-0"
+    >
       <div className="container mx-auto">
         <h1 className="text-foreground text-2xl font-semibold">
           Ulasan dari Konsumen

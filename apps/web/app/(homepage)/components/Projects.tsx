@@ -74,7 +74,7 @@ const projects: ProjectItem[] = [
 
 export function Projects() {
   return (
-    <section className="bg-secondary py-10 px-4 md:py-20 md:px-0">
+    <section id="projects" className="bg-secondary py-10 px-4 md:py-20 md:px-0">
       <div className="container mx-auto">
         <h1 className="text-foreground text-2xl md:text-3xl font-semibold">
           Project

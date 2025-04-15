@@ -56,7 +56,10 @@ const featureList: FeatureItem[] = [
 
 export function Features() {
   return (
-    <section className="relative bg-[#282835] py-10 px-4 md:py-20">
+    <section
+      id="features"
+      className="relative bg-[#282835] py-10 px-4 md:py-20"
+    >
       <Image
         src={featuresBgPattern}
         alt="features-bg-pattern"

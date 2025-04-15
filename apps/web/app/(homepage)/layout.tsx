@@ -1,18 +1,9 @@
-import {
-  SidebarProvider,
-  SidebarInset,
-} from "@workspace/ui/components/sidebar";
-import { MobileSidebar } from "@/components/Header/NavigationLinks";
+import { LandingLayout } from "@/layouts/LandingLayout/LandingLayout";
 
 export default function HomepageLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <SidebarProvider defaultOpen={false}>
-      <SidebarInset>{children}</SidebarInset>
-      <MobileSidebar variant="floating" side="right" />
-    </SidebarProvider>
-  );
+  return <LandingLayout>{children}</LandingLayout>;
 }

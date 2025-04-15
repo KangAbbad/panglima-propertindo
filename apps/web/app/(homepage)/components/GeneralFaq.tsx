@@ -66,7 +66,7 @@ const faqs: FaqItem[] = [
 
 export function GeneralFaq() {
   return (
-    <section className="bg-white py-10 px-4 md:py-20 md:px-0">
+    <section id="general-faq" className="bg-white py-10 px-4 md:py-20 md:px-0">
       <div className="container mx-auto">
         <h1 className="text-foreground text-2xl font-semibold">
           Pertanyaan Umum

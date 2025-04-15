@@ -4,9 +4,9 @@ import callToActionBgPattern from "@/assets/images/call-to-action-bg-pattern.png
 import { Button } from "@workspace/ui/components/button";
 import { ShoppingCart } from "lucide-react";
 
-export function CallToAction() {
+export function Booking() {
   return (
-    <section className="bg-secondary p-4 md:p-10">
+    <section id="booking" className="bg-secondary p-4 md:p-10">
       <div className="relative bg-[#FA9500] rounded-xl py-8 px-4 md:p-20">
         <div className="relative z-10 flex flex-col items-center justify-center">
           <h1 className="text-primary-foreground text-2xl md:text-3xl font-semibold text-center">
