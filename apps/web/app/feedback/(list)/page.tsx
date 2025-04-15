@@ -1,22 +1,15 @@
 import {
-  House,
   MessageSquare,
   MessagesSquare,
   PlusSquare,
   Search,
 } from "lucide-react";
+import Link from "next/link";
 import { InferType, number, object, string } from "yup";
 
 import { FeedbackItem, FeedbackItemType } from "./components/FeedbackItem";
 
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@workspace/ui/components/breadcrumb";
-import { Button } from "@workspace/ui/components/button";
+import { Button, buttonVariants } from "@workspace/ui/components/button";
 import {
   Select,
   SelectTrigger,
@@ -27,6 +20,7 @@ import {
 import { Input, InputIcon, InputRoot } from "@workspace/ui/components/input";
 import ChatBubbleLeftRightIcon from "@/assets/icons/chat-bubble-left-right-icon.svg";
 import FeedbackImage1 from "@/assets/images/feedback-image-1.jpg";
+import { DashboardBreadcrumb } from "@/layouts/DashboardLayout/Breadcrumb";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const optionItemSchema = object({
@@ -35,7 +29,14 @@ const optionItemSchema = object({
 });
 type OptionItem = InferType<typeof optionItemSchema>;
 
-const Page = () => {
+export default function Page() {
+  const breadcrumbLinks = [
+    {
+      icon: <MessagesSquare size={16} />,
+      label: "Feedback",
+      href: "#",
+    },
+  ];
   const feedbackNumbers: string[] = ["A12-75-111124", "A12-75-111120"];
   const unitOptions: OptionItem[] = [
     {
@@ -158,29 +159,13 @@ const Page = () => {
   return (
     <div className="space-y-5">
       <div className="flex items-start justify-between">
-        <Breadcrumb>
-          <BreadcrumbList className="rounded-md bg-white p-3">
-            <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbLink href="#" className="text-foreground">
-                <House size={16} />
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden md:block text-foreground">
-              /
-            </BreadcrumbSeparator>
-            <BreadcrumbItem>
-              <BreadcrumbLink
-                href="#"
-                className="flex items-center gap-2 text-foreground"
-              >
-                <MessagesSquare size={16} /> Feedback
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-        <Button className="h-auto py-3 !px-8">
+        <DashboardBreadcrumb links={breadcrumbLinks} />
+        <Link
+          href="/feedback/new"
+          className={buttonVariants({ className: "h-auto py-3 !px-8" })}
+        >
           <PlusSquare /> Buat Feedback
-        </Button>
+        </Link>
       </div>
       <div className="border border-primary rounded-lg bg-white space-y-5 px-4 py-[26px]">
         <div className="flex items-center gap-2">
@@ -264,6 +249,4 @@ const Page = () => {
       </div>
     </div>
   );
-};
-
-export default Page;
+}
