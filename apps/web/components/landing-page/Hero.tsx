@@ -85,7 +85,7 @@ export function Hero() {
               tanpa riba <br /> dan sesuai prinsip syariah. Daftar dan booking
               sekarang juga!
             </p>
-            <button className="rounded-md bg-primary hover:bg-green-700 cursor-pointer text-white text-sm font-medium px-8 py-3 mt-10">
+            <button className="rounded-md bg-primary hover:bg-green-700 text-white text-sm font-medium px-8 py-3 mt-10">
               Daftar & Beli NUB
             </button>
           </div>
@@ -140,7 +140,7 @@ export function Hero() {
               tanpa riba dan sesuai prinsip syariah. Daftar dan booking sekarang
               juga!
             </p>
-            <button className="rounded-md bg-primary hover:bg-green-700 cursor-pointer text-white text-sm font-medium px-8 py-3 mt-9">
+            <button className="rounded-md bg-primary hover:bg-green-700 text-white text-sm font-medium px-8 py-3 mt-9">
               Daftar & Beli NUB
             </button>
           </div>

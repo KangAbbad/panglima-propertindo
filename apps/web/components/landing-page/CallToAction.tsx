@@ -15,7 +15,7 @@ export function CallToAction() {
           <h2 className="text-primary-foreground text-sm md:text-base text-center mt-5">
             Tunggu apalagi, booking sekarang property syariah impian Anda
           </h2>
-          <Button className="bg-primary cursor-pointer py-3 px-4 mt-5 md:mt-10">
+          <Button className="bg-primary py-3 px-4 mt-5 md:mt-10">
             <ShoppingCart size={16} /> Daftar & Beli NUB
           </Button>
         </div>

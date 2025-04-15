@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
-import { Menu, PanelLeftIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight, Menu, PanelLeftIcon } from "lucide-react";
 
 import { useIsMobile } from "@workspace/ui/hooks/use-mobile";
 import { cn } from "@workspace/ui/lib/utils";
@@ -322,7 +322,35 @@ function SidebarHamburger({
       {...props}
     >
       <Menu />
+      <span className="sr-only">Toggle Sidebar</span>
     </button>
+  );
+}
+
+function SidebarDashboardTrigger({
+  className,
+  onClick,
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const { open, toggleSidebar } = useSidebar();
+
+  return (
+    <Button
+      data-sidebar="trigger"
+      data-slot="sidebar-trigger"
+      variant="ghost"
+      size="icon"
+      className={cn("size-8 shadow-md cursor-pointer", className)}
+      onClick={(event) => {
+        onClick?.(event);
+        toggleSidebar();
+      }}
+      {...props}
+    >
+      {!open && <ChevronRight color="#FA9500" />}
+      {open && <ChevronLeft color="#FA9500" />}
+      <span className="sr-only">Toggle Sidebar</span>
+    </Button>
   );
 }
 
@@ -743,6 +771,7 @@ export {
   SidebarProvider,
   SidebarRail,
   SidebarHamburger,
+  SidebarDashboardTrigger,
   SidebarSeparator,
   SidebarTrigger,
   useSidebar,
