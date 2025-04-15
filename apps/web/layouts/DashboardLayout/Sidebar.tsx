@@ -11,7 +11,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@workspace/ui/components/sidebar";
-import { PrimaryLogo } from "@/components/Header/PrimaryLogo";
+import { PrimaryLogo } from "@/layouts/LandingLayout/Header/PrimaryLogo";
 import Link from "next/link";
 import { cn } from "@workspace/ui/lib/utils";
 import { usePathname } from "next/navigation";
