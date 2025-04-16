@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import ReactQueryProvider from "@/components/ReactQueryProvider";
+
 import "@workspace/ui/globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
-        <main>{children}</main>
+        <main>
+          <ReactQueryProvider>{children}</ReactQueryProvider>
+        </main>
       </body>
     </html>
   );

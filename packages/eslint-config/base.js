@@ -1,8 +1,9 @@
-import js from "@eslint/js"
-import eslintConfigPrettier from "eslint-config-prettier"
-import onlyWarn from "eslint-plugin-only-warn"
-import turboPlugin from "eslint-plugin-turbo"
-import tseslint from "typescript-eslint"
+import js from "@eslint/js";
+import pluginQuery from "@tanstack/eslint-plugin-query";
+import eslintConfigPrettier from "eslint-config-prettier";
+import onlyWarn from "eslint-plugin-only-warn";
+import turboPlugin from "eslint-plugin-turbo";
+import tseslint from "typescript-eslint";
 
 /**
  * A shared ESLint configuration for the repository.
@@ -24,9 +25,10 @@ export const config = [
   {
     plugins: {
       onlyWarn,
+      "@tanstack/query": pluginQuery,
     },
   },
   {
     ignores: ["dist/**"],
   },
-]
+];
