@@ -196,7 +196,7 @@ export function FeedbackItem(props: FeedbackItemType) {
                       <span className="text-sm text-foreground">CSA</span>
                       <div className="flex items-center gap-1">
                         {Array.from({
-                          length: rating.csa,
+                          length: rating?.csa ?? 0,
                         }).map((_, idx) => (
                           <Star
                             key={idx}
@@ -217,7 +217,7 @@ export function FeedbackItem(props: FeedbackItemType) {
                     <span className="text-sm text-foreground">Konstruksi</span>
                     <div className="flex items-center gap-1">
                       {Array.from({
-                        length: rating.konstruksi,
+                        length: rating?.konstruksi ?? 0,
                       }).map((_, idx) => (
                         <Star
                           key={idx}

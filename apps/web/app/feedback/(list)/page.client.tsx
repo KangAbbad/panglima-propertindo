@@ -122,7 +122,7 @@ export default function FeedbackListPage() {
           // Demo purpose only
           const id = `A12-75-111124${feedbackItem.id}`;
           const subCategories = [
-            feedbackItem.sub_category,
+            feedbackItem?.sub_category ?? "",
             "Drainase Lingkungan",
             "Lingkungan",
           ];
