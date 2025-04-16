@@ -157,7 +157,7 @@ export default function Page() {
   ];
 
   return (
-    <div className="space-y-5">
+    <section className="space-y-5">
       <div className="flex items-start justify-between">
         <DashboardBreadcrumb links={breadcrumbLinks} />
         <Link
@@ -247,6 +247,6 @@ export default function Page() {
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }

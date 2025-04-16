@@ -1,4 +1,4 @@
-import { House, MessagesSquare } from "lucide-react";
+import { House } from "lucide-react";
 
 import {
   Breadcrumb,
@@ -42,7 +42,7 @@ export function DashboardBreadcrumb(props: Props) {
                   href={linkItem.href}
                   className="flex items-center gap-2 text-foreground"
                 >
-                  <MessagesSquare size={16} /> Feedback
+                  {linkItem.icon} {linkItem.label}
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {!isLastItem && (
