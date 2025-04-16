@@ -33,6 +33,8 @@ import {
 import feedbackImage2 from "@/assets/images/feedback-image-2.jpg";
 import feedbackImage3 from "@/assets/images/feedback-image-3.jpg";
 import { feedbackDetailStore } from "../(list)/libs/state";
+import { delayFor } from "@/utils/delayFor";
+import dayjs from "dayjs";
 
 export default function FeedbackDetailPage() {
   const router = useRouter();
@@ -76,6 +78,7 @@ export default function FeedbackDetailPage() {
     feedbackImage2,
     feedbackImage3,
   ];
+  const newDateFormat = dayjs(date).format("DD MMMM YYYY, HH:mm");
   const isStatusProgress = status === 1;
   const isStatusComplete = status === 2;
 
@@ -88,8 +91,9 @@ export default function FeedbackDetailPage() {
     setCurrentThumb(index);
   };
 
-  const handleBack = () => {
+  const handleBack = async () => {
     router.back();
+    await delayFor(2000);
     resetFeedbackDetailState();
   };
 
@@ -232,7 +236,7 @@ export default function FeedbackDetailPage() {
                   </span>
                 </div>
                 <span className="text-sm text-secondary-foreground">
-                  {date}
+                  {newDateFormat}
                 </span>
               </div>
               <div className="space-y-2">

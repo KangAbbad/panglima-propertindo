@@ -27,19 +27,21 @@ const LoadingPage = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <Card className="gap-4 py-4">
-          <CardHeader className="flex px-4">
-            <Skeleton className="h-[180px] w-full rounded-lg" />
-          </CardHeader>
-          <CardContent className="space-y-4 px-4">
-            <div className="flex items-start justify-between">
-              <div className="space-y-2">
-                <Skeleton className="h-6 w-40 rounded-md" />
+        {Array.from({ length: 3 }).map((_, idx) => (
+          <Card key={idx} className="gap-4 py-4">
+            <CardHeader className="flex px-4">
+              <Skeleton className="h-[180px] w-full rounded-lg" />
+            </CardHeader>
+            <CardContent className="space-y-4 px-4">
+              <div className="flex items-start justify-between">
+                <div className="space-y-2">
+                  <Skeleton className="h-6 w-40 rounded-md" />
+                </div>
               </div>
-            </div>
-            <Skeleton className="h-4 w-24 rounded-full" />
-          </CardContent>
-        </Card>
+              <Skeleton className="h-4 w-24 rounded-full" />
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </section>
   );
