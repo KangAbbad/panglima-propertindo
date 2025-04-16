@@ -10,12 +10,14 @@ import {
 import { Fragment, ReactNode } from "react";
 import { cn } from "@workspace/ui/lib/utils";
 
+export type BreadcrumbLinkItem = {
+  icon?: ReactNode;
+  label: string;
+  href: string;
+};
+
 type Props = {
-  links: {
-    icon?: ReactNode;
-    label: string;
-    href: string;
-  }[];
+  links: BreadcrumbLinkItem[];
 };
 
 export function DashboardBreadcrumb(props: Props) {

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import {
   ImageIcon,
   ImageOff,
@@ -11,11 +12,11 @@ import {
   MessageSquare,
 } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 import { object, string, mixed, number, array, boolean, InferType } from "yup";
 
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardHeader, CardContent } from "@workspace/ui/components/card";
-import Link from "next/link";
 import { Separator } from "@workspace/ui/components/separator";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -51,10 +52,13 @@ export function FeedbackItem(props: FeedbackItemType) {
   } = props;
   const isStatusProgress = status === 1;
   const isStatusComplete = status === 2;
+  const countRestOfSubCategories =
+    subCategories.length > 2 ? subCategories.length - 2 : 0;
+  const formattedDate = dayjs(date).format("DD MMMM YYYY, HH:mm");
 
   return (
     <Link href={`/feedback/${id}`}>
-      <Card className="gap-4 py-4">
+      <Card className="gap-4 h-full py-4">
         <CardHeader className="flex px-4">
           {imageUrl ? (
             <div className="relative flex-1 rounded-lg overflow-hidden h-[180px]">
@@ -72,7 +76,7 @@ export function FeedbackItem(props: FeedbackItemType) {
             </div>
           )}
         </CardHeader>
-        <CardContent className="space-y-4 px-4">
+        <CardContent className="flex flex-col gap-4 h-full px-4">
           <div className="flex items-start justify-between">
             <div className="space-y-2">
               <h3 className="text-base text-foreground font-bold">{id}</h3>
@@ -102,7 +106,9 @@ export function FeedbackItem(props: FeedbackItemType) {
 
           <div className="flex items-center gap-2">
             <CalendarDays size={16} className="text-muted-foreground" />
-            <span className="text-sm text-secondary-foreground">{date}</span>
+            <span className="text-sm text-secondary-foreground">
+              {formattedDate}
+            </span>
           </div>
 
           <div className="space-y-2">
@@ -123,7 +129,7 @@ export function FeedbackItem(props: FeedbackItemType) {
               </span>
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              {subCategories.map((subCategory, subCategoryIdx) => (
+              {subCategories.slice(0, 2).map((subCategory, subCategoryIdx) => (
                 <span
                   key={`${subCategory}-${subCategoryIdx}`}
                   className="border rounded-md text-sm text-foreground font-medium py-[2px] px-2"
@@ -131,10 +137,15 @@ export function FeedbackItem(props: FeedbackItemType) {
                   {subCategory}
                 </span>
               ))}
+              {countRestOfSubCategories > 0 && (
+                <span className="border rounded-md text-sm text-foreground font-medium py-[2px] px-2">
+                  +{countRestOfSubCategories}
+                </span>
+              )}
             </div>
           </div>
 
-          <div className="border rounded-md space-y-2 bg-muted/50 p-4">
+          <div className="border rounded-md space-y-2 bg-muted/50 p-4 mt-auto">
             <div className="flex items-center gap-2">
               <MessageSquareDashed
                 size={16}
