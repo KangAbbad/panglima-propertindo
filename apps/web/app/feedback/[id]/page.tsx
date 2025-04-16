@@ -137,7 +137,7 @@ export default function Page() {
           </div>
         </div>
         <div className="flex gap-4">
-          <div className="space-y-4 w-[280px]">
+          <div className="space-y-2 w-[280px]">
             <Carousel setApi={setFeedbackImageApi}>
               <CarouselContent>
                 {imageUrls.map((imageUrl, imageUrlIdx) => (
@@ -159,11 +159,11 @@ export default function Page() {
               </CarouselContent>
             </Carousel>
             <Carousel setApi={setFeedbackThumbnailApi}>
-              <CarouselContent>
+              <CarouselContent className="-ml-2">
                 {imageUrls.map((imageUrl, imageUrlIdx) => (
                   <CarouselItem
                     key={imageUrlIdx}
-                    className="basis-1/3 cursor-pointer"
+                    className="basis-1/3 cursor-pointer pl-2"
                     onClick={() => handleSelectThumb(imageUrlIdx)}
                   >
                     <div
