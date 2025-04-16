@@ -10,6 +10,7 @@ import { InferType, number, object, string } from "yup";
 import { FeedbackItem, FeedbackItemType } from "./components/FeedbackItem";
 
 import { Button, buttonVariants } from "@workspace/ui/components/button";
+import { Input, InputIcon, InputRoot } from "@workspace/ui/components/input";
 import {
   Select,
   SelectTrigger,
@@ -17,7 +18,6 @@ import {
   SelectContent,
   SelectItem,
 } from "@workspace/ui/components/select";
-import { Input, InputIcon, InputRoot } from "@workspace/ui/components/input";
 import ChatBubbleLeftRightIcon from "@/assets/icons/chat-bubble-left-right-icon.svg";
 import FeedbackImage1 from "@/assets/images/feedback-image-1.jpg";
 import { DashboardBreadcrumb } from "@/layouts/DashboardLayout/Breadcrumb";
@@ -29,133 +29,137 @@ const optionItemSchema = object({
 });
 type OptionItem = InferType<typeof optionItemSchema>;
 
-export default function Page() {
-  const breadcrumbLinks = [
-    {
-      icon: <MessagesSquare size={16} />,
-      label: "Feedback",
-      href: "#",
-    },
-  ];
-  const feedbackNumbers: string[] = ["A12-75-111124", "A12-75-111120"];
-  const unitOptions: OptionItem[] = [
-    {
-      id: 1,
-      name: "Unit Bangunan/Kavling",
-    },
-    {
-      id: 2,
-      name: "Fasilitas Umum & Lingkungan",
-    },
-    {
-      id: 3,
-      name: "Pembayaran",
-    },
-    {
-      id: 4,
-      name: "Legal & Akad",
-    },
-  ];
-  const statusOptions: OptionItem[] = [
-    {
-      id: 1,
-      name: "Belum Selesai",
-    },
-    {
-      id: 2,
-      name: "Selesai",
-    },
-  ];
-  const feedbackList: FeedbackItemType[] = [
-    {
-      id: "A12-75-111124",
-      imageUrl: FeedbackImage1,
-      status: 2,
-      date: "20 November 2024, 14:20",
-      category: "Fasilitas Umum & Lingkungan",
-      subCategories: ["Drainase Lingkungan", "Linkungan", "+2"],
-      description:
-        "Drainase Lingkungan bermasalah, Listrik terkena hujan, Keamanan & kebersihan tidak terjaga",
-      tag: "F9 - Kavling",
-      rating: {
-        csa: 5,
-        konstruksi: 5,
-      },
-      hasReview: true,
-    },
-    {
-      id: "A12-75-111124",
-      imageUrl: FeedbackImage1,
-      status: 1,
-      date: "20 November 2024, 14:20",
-      category: "Fasilitas Umum & Lingkungan",
-      subCategories: ["Drainase Lingkungan", "Linkungan", "+2"],
-      description:
-        "Drainase Lingkungan bermasalah, Listrik terkena hujan, Keamanan & kebersihan tidak terjaga",
-      tag: "F9 - Kavling",
-      rating: null,
-      hasReview: true,
-    },
-    {
-      id: "A12-75-111124",
-      imageUrl: FeedbackImage1,
-      status: 1,
-      date: "20 November 2024, 14:20",
-      category: "Fasilitas Umum & Lingkungan",
-      subCategories: ["Drainase Lingkungan", "Linkungan", "+2"],
-      description:
-        "Drainase Lingkungan bermasalah, Listrik terkena hujan, Keamanan & kebersihan tidak terjaga",
-      tag: "F9 - Kavling",
-      rating: null,
-      hasReview: true,
-    },
-    {
-      id: "A12-75-111124",
-      imageUrl: FeedbackImage1,
-      status: 1,
-      date: "20 November 2024, 14:20",
-      category: "Fasilitas Umum & Lingkungan",
-      subCategories: ["Drainase Lingkungan", "Linkungan", "+2"],
-      description:
-        "Drainase Lingkungan bermasalah, Listrik terkena hujan, Keamanan & kebersihan tidak terjaga",
-      tag: "F9 - Kavling",
-      rating: {
-        csa: null,
-        konstruksi: null,
-      },
-      hasReview: false,
-    },
-    {
-      id: "A12-75-111124",
-      imageUrl: null,
-      status: 1,
-      date: "20 November 2024, 14:20",
-      category: "Fasilitas Umum & Lingkungan",
-      subCategories: ["Drainase Lingkungan", "Linkungan", "+2"],
-      description:
-        "Drainase Lingkungan bermasalah, Listrik terkena hujan, Keamanan & kebersihan tidak terjaga",
-      tag: "F9 - Kavling",
-      rating: null,
-      hasReview: true,
-    },
-    {
-      id: "A12-75-111124",
-      imageUrl: FeedbackImage1,
-      status: 1,
-      date: "20 November 2024, 14:20",
-      category: "Fasilitas Umum & Lingkungan",
-      subCategories: ["Drainase Lingkungan", "Linkungan", "+2"],
-      description:
-        "Drainase Lingkungan bermasalah, Listrik terkena hujan, Keamanan & kebersihan tidak terjaga",
-      tag: "F9 - Kavling",
-      rating: {
-        csa: null,
-        konstruksi: null,
-      },
-      hasReview: false,
-    },
-  ];
+const breadcrumbLinks = [
+  {
+    icon: <MessagesSquare size={16} />,
+    label: "Feedback",
+    href: "/feedback",
+  },
+];
 
+const feedbackNumbers: string[] = ["A12-75-111124", "A12-75-111120"];
+
+const unitOptions: OptionItem[] = [
+  {
+    id: 1,
+    name: "Unit Bangunan/Kavling",
+  },
+  {
+    id: 2,
+    name: "Fasilitas Umum & Lingkungan",
+  },
+  {
+    id: 3,
+    name: "Pembayaran",
+  },
+  {
+    id: 4,
+    name: "Legal & Akad",
+  },
+];
+
+const statusOptions: OptionItem[] = [
+  {
+    id: 1,
+    name: "Belum Selesai",
+  },
+  {
+    id: 2,
+    name: "Selesai",
+  },
+];
+
+const feedbackList: FeedbackItemType[] = [
+  {
+    id: "A12-75-111124",
+    imageUrl: FeedbackImage1,
+    status: 2,
+    date: "20 November 2024, 14:20",
+    category: "Fasilitas Umum & Lingkungan",
+    subCategories: ["Drainase Lingkungan", "Linkungan", "+2"],
+    description:
+      "Drainase Lingkungan bermasalah, Listrik terkena hujan, Keamanan & kebersihan tidak terjaga",
+    tag: "F9 - Kavling",
+    rating: {
+      csa: 5,
+      konstruksi: 5,
+    },
+    hasReview: true,
+  },
+  {
+    id: "A12-75-111124",
+    imageUrl: FeedbackImage1,
+    status: 1,
+    date: "20 November 2024, 14:20",
+    category: "Fasilitas Umum & Lingkungan",
+    subCategories: ["Drainase Lingkungan", "Linkungan", "+2"],
+    description:
+      "Drainase Lingkungan bermasalah, Listrik terkena hujan, Keamanan & kebersihan tidak terjaga",
+    tag: "F9 - Kavling",
+    rating: null,
+    hasReview: true,
+  },
+  {
+    id: "A12-75-111124",
+    imageUrl: FeedbackImage1,
+    status: 1,
+    date: "20 November 2024, 14:20",
+    category: "Fasilitas Umum & Lingkungan",
+    subCategories: ["Drainase Lingkungan", "Linkungan", "+2"],
+    description:
+      "Drainase Lingkungan bermasalah, Listrik terkena hujan, Keamanan & kebersihan tidak terjaga",
+    tag: "F9 - Kavling",
+    rating: null,
+    hasReview: true,
+  },
+  {
+    id: "A12-75-111124",
+    imageUrl: FeedbackImage1,
+    status: 1,
+    date: "20 November 2024, 14:20",
+    category: "Fasilitas Umum & Lingkungan",
+    subCategories: ["Drainase Lingkungan", "Linkungan", "+2"],
+    description:
+      "Drainase Lingkungan bermasalah, Listrik terkena hujan, Keamanan & kebersihan tidak terjaga",
+    tag: "F9 - Kavling",
+    rating: {
+      csa: null,
+      konstruksi: null,
+    },
+    hasReview: false,
+  },
+  {
+    id: "A12-75-111124",
+    imageUrl: null,
+    status: 1,
+    date: "20 November 2024, 14:20",
+    category: "Fasilitas Umum & Lingkungan",
+    subCategories: ["Drainase Lingkungan", "Linkungan", "+2"],
+    description:
+      "Drainase Lingkungan bermasalah, Listrik terkena hujan, Keamanan & kebersihan tidak terjaga",
+    tag: "F9 - Kavling",
+    rating: null,
+    hasReview: true,
+  },
+  {
+    id: "A12-75-111124",
+    imageUrl: FeedbackImage1,
+    status: 1,
+    date: "20 November 2024, 14:20",
+    category: "Fasilitas Umum & Lingkungan",
+    subCategories: ["Drainase Lingkungan", "Linkungan", "+2"],
+    description:
+      "Drainase Lingkungan bermasalah, Listrik terkena hujan, Keamanan & kebersihan tidak terjaga",
+    tag: "F9 - Kavling",
+    rating: {
+      csa: null,
+      konstruksi: null,
+    },
+    hasReview: false,
+  },
+];
+
+export default function Page() {
   return (
     <section className="space-y-5">
       <div className="flex items-start justify-between">
