@@ -1,4 +1,5 @@
 import { apiFetch, endpoints } from "@/services/endpoints";
+import { AxiosResponse } from "axios";
 import { InferType, number, object, string } from "yup";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -15,6 +16,9 @@ const FeedbackItemSchema = object({
 type FeedbackItem = InferType<typeof FeedbackItemSchema>;
 
 export async function getList() {
-  const res = await apiFetch<FeedbackItem[]>({ endpoint: endpoints.feedback });
-  return res;
+  const res: AxiosResponse<FeedbackItem[]> = await apiFetch({
+    method: "GET",
+    url: endpoints.feedback,
+  });
+  return res.data;
 }

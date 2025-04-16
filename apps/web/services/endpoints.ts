@@ -1,17 +1,14 @@
+import axios, { AxiosRequestConfig } from "axios";
+
 export const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
 
-type ApiFetchType = {
-  endpoint: `/${string}`;
-  options?: RequestInit;
-};
+const axiosInstance = axios.create({
+  baseURL: baseUrl,
+});
 
-export async function apiFetch<T>(params: ApiFetchType): Promise<T> {
-  const { endpoint, options } = params;
-  const res = await fetch(`${baseUrl}${endpoint}`, options);
-  if (!res.ok) {
-    throw new Error(`API error: ${res.status}`);
-  }
-  return res.json();
+export async function apiFetch(options?: AxiosRequestConfig) {
+  const response = await axiosInstance({ ...options });
+  return response;
 }
 
 type EndpointStringPatternType = `/${string}`;
