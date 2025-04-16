@@ -7,6 +7,7 @@ import { FeedbackItemType } from "../components/FeedbackItem";
 
 export const queryKey = {
   FEEDBACK_LIST: "FEEDBACK_LIST",
+  FEEDBACK_DETAIL: "FEEDBACK_DETAIL",
 };
 
 export const breadcrumbLinks: BreadcrumbLinkItem[] = [

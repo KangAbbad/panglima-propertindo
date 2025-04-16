@@ -18,6 +18,8 @@ import { object, string, mixed, number, array, boolean, InferType } from "yup";
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardHeader, CardContent } from "@workspace/ui/components/card";
 import { Separator } from "@workspace/ui/components/separator";
+import { feedbackDetailStore } from "../libs/state";
+import { staticImportToBase64 } from "@/utils/staticImportToBase64";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const feedbackItemSchema = object({
@@ -50,14 +52,29 @@ export function FeedbackItem(props: FeedbackItemType) {
     status,
     tag,
   } = props;
+
+  const { setData: setFeedbackDetailState } = feedbackDetailStore();
+
   const isStatusProgress = status === 1;
   const isStatusComplete = status === 2;
   const countRestOfSubCategories =
     subCategories.length > 2 ? subCategories.length - 2 : 0;
   const formattedDate = dayjs(date).format("DD MMMM YYYY, HH:mm");
 
+  const prefetchFeedbackDetail = async () => {
+    const newImageUrl = imageUrl ? await staticImportToBase64(imageUrl) : null;
+    const newFeedbackDetail = {
+      ...props,
+      imageUrl: newImageUrl,
+    };
+    setFeedbackDetailState({
+      ...newFeedbackDetail,
+      imageUrl: newImageUrl as unknown as StaticImageData,
+    });
+  };
+
   return (
-    <Link href={`/feedback/${id}`}>
+    <Link href={`/feedback/${id}`} onClick={prefetchFeedbackDetail}>
       <Card className="gap-4 h-full py-4">
         <CardHeader className="flex px-4">
           {imageUrl ? (

@@ -15,12 +15,9 @@ import {
 } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { Button } from "@workspace/ui/components/button";
-import {
-  BreadcrumbLinkItem,
-  DashboardBreadcrumb,
-} from "@/layouts/DashboardLayout/Breadcrumb";
 import {
   Carousel,
   CarouselApi,
@@ -28,12 +25,14 @@ import {
   CarouselItem,
 } from "@workspace/ui/components/carousel";
 import { Separator } from "@workspace/ui/components/separator";
-
-import feedbackImage1 from "@/assets/images/feedback-image-1.jpg";
+import { cn } from "@workspace/ui/lib/utils";
+import {
+  BreadcrumbLinkItem,
+  DashboardBreadcrumb,
+} from "@/layouts/DashboardLayout/Breadcrumb";
 import feedbackImage2 from "@/assets/images/feedback-image-2.jpg";
 import feedbackImage3 from "@/assets/images/feedback-image-3.jpg";
-import { useEffect, useState } from "react";
-import { cn } from "@workspace/ui/lib/utils";
+import { feedbackDetailStore } from "../(list)/libs/state";
 
 export default function FeedbackDetailPage() {
   const router = useRouter();
@@ -51,35 +50,32 @@ export default function FeedbackDetailPage() {
     },
   ];
 
+  const { data: feedbackDetailState, resetData: resetFeedbackDetailState } =
+    feedbackDetailStore();
+  const {
+    category,
+    date,
+    description,
+    hasReview,
+    rating,
+    status,
+    subCategories = [],
+    tag,
+    imageUrl,
+  } = feedbackDetailState ?? {};
+
   const [feedbackImageApi, setFeedbackImageApi] = useState<CarouselApi>();
   const [feedbackThumbnailApi, setFeedbackThumbnailApi] =
     useState<CarouselApi>();
   const [currentThumb, setCurrentThumb] = useState(0);
 
-  const tag: string = "F9 - Kavling";
-  const date: string = "20 November 2024, 14:20";
-  const category: string = "Fasilitas Umum & Lingkungan";
-  const subCategories: string[] = [
-    "Drainase Linkungan",
-    "Listrik",
-    "Keamanan & Ketertiban",
-    "Akses Jalan",
-  ];
-  const hasReview: boolean = true;
-  const rating: { csa: number; konstruksi: number } = {
-    csa: 4,
-    konstruksi: 3,
-  };
-  const description: string =
-    "Drainase Lingkungan bermasalah, Listrik tokennya habis, Keamanan & ketertiban tidak aman dan tidak tertib, Akses jalan kayak seperti mau terbang ke langit ke tujuh lalu terjun bebas gaya lumba-lumba bersama paus dan ultramen di sungai";
   const feedback: string =
     "Keren banget pengerjaannya, membuat saya menangis melihat hasil pengerjaannya, semoga petugas yang menyelesaikannya menjadi petugas yang taat pada pemerintahan pak Praroro dan diberikan selalu rezeki seblak yang melimpah, uhuyy";
   const imageUrls: StaticImageData[] = [
-    feedbackImage1,
+    imageUrl as unknown as StaticImageData,
     feedbackImage2,
     feedbackImage3,
   ];
-  const status: number = 1;
   const isStatusProgress = status === 1;
   const isStatusComplete = status === 2;
 
@@ -90,6 +86,11 @@ export default function FeedbackDetailPage() {
     feedbackThumbnailApi.scrollTo(index);
     feedbackImageApi.scrollTo(index);
     setCurrentThumb(index);
+  };
+
+  const handleBack = () => {
+    router.back();
+    resetFeedbackDetailState();
   };
 
   useEffect(() => {
@@ -118,6 +119,33 @@ export default function FeedbackDetailPage() {
     };
   }, [feedbackImageApi, feedbackThumbnailApi]);
 
+  if (!feedbackDetailState) {
+    return (
+      <section className="space-y-5">
+        <div className="flex items-start">
+          <DashboardBreadcrumb links={breadcrumbLinks} />
+        </div>
+        <div className="flex items-center gap-4">
+          <Button
+            variant="outline"
+            className="border-primary rounded-md h-9 w-9"
+            onClick={handleBack}
+          >
+            <ChevronLeft size={16} className="text-primary" />
+          </Button>
+          <h1 className="text-lg text-foreground font-semibold">
+            Detail Feedback
+          </h1>
+        </div>
+        <div className="rounded-lg flex items-center justify-center bg-white py-20">
+          <h1 className="text-lg text-red-600 font-semibold">
+            Data not available!
+          </h1>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="space-y-5">
       <div className="flex items-start">
@@ -127,7 +155,7 @@ export default function FeedbackDetailPage() {
         <Button
           variant="outline"
           className="border-primary rounded-md h-9 w-9"
-          onClick={() => router.back()}
+          onClick={handleBack}
         >
           <ChevronLeft size={16} className="text-primary" />
         </Button>
@@ -328,8 +356,12 @@ export default function FeedbackDetailPage() {
               <MessageSquare size={16} /> Beri Rating & Ulasan
             </Button>
           )}
-          <Separator />
-          <p className="text-sm text-foreground">{feedback}</p>
+          {hasReview && (
+            <>
+              <Separator />
+              <p className="text-sm text-foreground">{feedback}</p>
+            </>
+          )}
         </div>
       </div>
     </section>
