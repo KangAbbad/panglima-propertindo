@@ -35,6 +35,7 @@ import feedbackImage3 from "@/assets/images/feedback-image-3.jpg";
 import { feedbackDetailStore } from "../(list)/libs/state";
 import { delayFor } from "@/utils/delayFor";
 import dayjs from "dayjs";
+import { statusOptionList } from "../(list)/libs/constants";
 
 export default function FeedbackDetailPage() {
   const router = useRouter();
@@ -79,8 +80,12 @@ export default function FeedbackDetailPage() {
     feedbackImage3,
   ];
   const newDateFormat = dayjs(date).format("DD MMMM YYYY, HH:mm");
-  const isStatusProgress = status === 1;
+  const isStatusProgress = status === 1 || status === 3 || status === 4;
   const isStatusComplete = status === 2;
+  const findStatus = statusOptionList.find(
+    (statusOption) => statusOption.id === status
+  );
+  const statusLabel = findStatus?.name ?? "-";
 
   const handleSelectThumb = (index: number) => {
     if (!feedbackImageApi || !feedbackThumbnailApi) {
@@ -249,7 +254,7 @@ export default function FeedbackDetailPage() {
                     <div className="flex items-center gap-2">
                       <RefreshCcw size={16} color="#FA9500" />
                       <span className="text-[#FA9500] text-xs font-medium">
-                        Belum Selesai
+                        {statusLabel}
                       </span>
                     </div>
                   )}
@@ -257,7 +262,7 @@ export default function FeedbackDetailPage() {
                     <div className="flex items-center gap-2">
                       <Check size={16} className="text-primary" />
                       <span className="text-primary text-xs font-medium">
-                        Selesai
+                        {statusLabel}
                       </span>
                     </div>
                   )}

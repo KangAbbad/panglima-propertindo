@@ -57,18 +57,22 @@ export const statusOptionsObj: {
     label: "Selesai",
     value: 2,
   },
+  waiting: {
+    label: "Menunggu",
+    value: 3,
+  },
+  in_progress: {
+    label: "Dalam Proses",
+    value: 4,
+  },
 };
 
-export const statusOptionList: OptionItem[] = [
-  {
-    id: 1,
-    name: "Belum Selesai",
-  },
-  {
-    id: 2,
-    name: "Selesai",
-  },
-];
+export const statusOptionList: OptionItem[] = Object.entries(
+  statusOptionsObj
+).map(([, value]) => ({
+  id: value.value,
+  name: value.label,
+}));
 
 export const feedbackList: FeedbackItemType[] = [
   {

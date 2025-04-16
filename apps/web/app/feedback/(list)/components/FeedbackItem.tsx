@@ -20,6 +20,7 @@ import { Card, CardHeader, CardContent } from "@workspace/ui/components/card";
 import { Separator } from "@workspace/ui/components/separator";
 import { feedbackDetailStore } from "../libs/state";
 import { staticImportToBase64 } from "@/utils/staticImportToBase64";
+import { statusOptionList } from "../libs/constants";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const feedbackItemSchema = object({
@@ -55,8 +56,12 @@ export function FeedbackItem(props: FeedbackItemType) {
 
   const { setData: setFeedbackDetailState } = feedbackDetailStore();
 
-  const isStatusProgress = status === 1;
+  const isStatusProgress = status === 1 || status === 3 || status === 4;
   const isStatusComplete = status === 2;
+  const findStatus = statusOptionList.find(
+    (statusOption) => statusOption.id === status
+  );
+  const statusLabel = findStatus?.name ?? "-";
   const countRestOfSubCategories =
     subCategories.length > 2 ? subCategories.length - 2 : 0;
   const formattedDate = dayjs(date).format("DD MMMM YYYY, HH:mm");
@@ -106,7 +111,7 @@ export function FeedbackItem(props: FeedbackItemType) {
                 <div className="flex items-center gap-2">
                   <RefreshCcw size={16} color="#FA9500" />
                   <span className="text-[#FA9500] text-xs font-medium">
-                    Belum Selesai
+                    {statusLabel}
                   </span>
                 </div>
               )}
@@ -114,7 +119,7 @@ export function FeedbackItem(props: FeedbackItemType) {
                 <div className="flex items-center gap-2">
                   <Check size={16} className="text-primary" />
                   <span className="text-primary text-xs font-medium">
-                    Selesai
+                    {statusLabel}
                   </span>
                 </div>
               )}
