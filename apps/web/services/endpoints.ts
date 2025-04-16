@@ -14,8 +14,12 @@ export async function apiFetch(options?: AxiosRequestConfig) {
 type EndpointStringPatternType = `/${string}`;
 type EndpointsType = {
   feedback: EndpointStringPatternType;
+  feedbackCategories: EndpointStringPatternType;
+  feedbackSubCategories: EndpointStringPatternType;
 };
 
 export const endpoints: EndpointsType = {
   feedback: "/feedback",
+  feedbackCategories: "/feedback-category",
+  feedbackSubCategories: "/feedback-sub-category",
 };

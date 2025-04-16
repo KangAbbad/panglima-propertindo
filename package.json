@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev -- --port 3025",
+    "dev": "turbo dev -- --port 3025 --experimental-https",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

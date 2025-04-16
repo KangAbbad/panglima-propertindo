@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import { Toaster } from "@workspace/ui/components/sonner";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
 
 import "@workspace/ui/globals.css";
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <main>
           <ReactQueryProvider>{children}</ReactQueryProvider>
+          <Toaster />
         </main>
       </body>
     </html>

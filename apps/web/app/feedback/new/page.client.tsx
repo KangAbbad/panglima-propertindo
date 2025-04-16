@@ -1,12 +1,27 @@
 "use client";
 
-import { Eye, MessagesSquare, PlusSquare } from "lucide-react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  CheckCircle2,
+  Eye,
+  Loader2,
+  MessagesSquare,
+  PlusSquare,
+} from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { array, InferType, object, string } from "yup";
 
 import { FeedbackTips } from "./components/FeedbackTips";
+import { queryKey } from "./libs/constants";
+import {
+  createFeedback,
+  CreateFeedbackPayload,
+  getCategoryList,
+  getSubCategoryList,
+} from "./services/get";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@workspace/ui/components/button";
@@ -26,6 +41,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@workspace/ui/components/select";
+import { toast } from "@workspace/ui/components/sonner";
 import { Textarea } from "@workspace/ui/components/textarea";
 import {
   Dialog,
@@ -34,12 +50,14 @@ import {
   DialogTitle,
 } from "@workspace/ui/components/dialog";
 import { DashboardBreadcrumb } from "@/layouts/DashboardLayout/Breadcrumb";
+import { parseStringToNumber } from "@/utils/parseStringToNumber";
+import { delayFor } from "@/utils/delayFor";
 
 const formSchema = object({
-  unit: string().required().default(""),
-  categoryId: string().required().default(""),
-  subCategoryId: string().required().default(""),
-  feedback: string().required().default(""),
+  unit: string().required("Unit wajib diisi!").default(""),
+  categoryId: string().required("Kategori wajib diisi!").default(""),
+  subCategoryId: string().required("Sub kategori wajib diisi!").default(""),
+  feedback: string().required("Feedback wajib diisi!").default(""),
   imageUrls: array(string()).nullable().default([]),
 });
 type FormSchemaType = InferType<typeof formSchema>;
@@ -57,73 +75,9 @@ const breadcrumbLinks = [
   },
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const categorySchema = object({
-  label: string().required().default(""),
-  value: string().required().default(""),
-});
-type CategorySchemaType = InferType<typeof categorySchema>;
-
-const categoryList: CategorySchemaType[] = [
-  {
-    label: "Unit Bangunan/Kavling",
-    value: "1",
-  },
-  {
-    label: "Fasilitas Umum & Lingkungan",
-    value: "2",
-  },
-  {
-    label: "Pembayaran",
-    value: "3",
-  },
-  {
-    label: "Legal & Akad",
-    value: "4",
-  },
-];
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const subCategorySchema = object({
-  label: string().required().default(""),
-  value: string().required().default(""),
-  categoryId: string().required().default(""),
-});
-type SubCategorySchemaType = InferType<typeof subCategorySchema>;
-const subCategoryList: SubCategorySchemaType[] = [
-  {
-    label: "Dinding",
-    value: "1",
-    categoryId: "1",
-  },
-  {
-    label: "Kusen, Pintu & Kaca",
-    value: "2",
-    categoryId: "1",
-  },
-  {
-    label: "Lantai & Halaman",
-    value: "3",
-    categoryId: "1",
-  },
-  {
-    label: "Drainase",
-    value: "4",
-    categoryId: "1",
-  },
-  {
-    label: "Kelistrikan",
-    value: "5",
-    categoryId: "1",
-  },
-  {
-    label: "Proses Bangun",
-    value: "6",
-    categoryId: "1",
-  },
-];
-
 export default function FeedbackFormPage() {
+  const router = useRouter();
+
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [isImagePreviewVisible, setImagePreviewVisible] = useState(false);
   const [selectedImagePreview, setSelectedImagePreview] = useState<
@@ -140,8 +94,46 @@ export default function FeedbackFormPage() {
       imageUrls: [],
     },
   });
+  const watchCategoryId = form.watch().categoryId;
 
-  const handleImageChange = async (event: ChangeEvent<HTMLInputElement>) => {
+  const {
+    data: feedbackCategoryList = [],
+    isFetching: isFeedbackCategoryListLoading,
+  } = useQuery({
+    queryKey: [queryKey.FEEDBACK_CATEGORY_LIST],
+    queryFn: getCategoryList,
+  });
+
+  const {
+    data: feedbackSubCategoryList = [],
+    isFetching: isFeedbackSubCategoryListLoading,
+  } = useQuery({
+    queryKey: [
+      queryKey.FEEDBACK_SUBCATEGORY_LIST,
+      { categoryId: watchCategoryId },
+    ],
+    queryFn: () => {
+      return getSubCategoryList({
+        id_category: parseStringToNumber(watchCategoryId),
+      });
+    },
+    enabled: !!watchCategoryId,
+  });
+
+  const { mutate, isPending: isSubmitLoading } = useMutation({
+    mutationFn: createFeedback,
+    onSuccess: async (res) => {
+      console.log({ res });
+      toast("Berhasil membuat feedback baru!", {
+        icon: <CheckCircle2 size={20} fill="#287C3E" color="#FFFFFF" />,
+        descriptionClassName: "text-secondary",
+      });
+      await delayFor(1500);
+      router.push("/feedback");
+    },
+  });
+
+  async function onImageChange(event: ChangeEvent<HTMLInputElement>) {
     const files = event.target.files;
     if (!files) return [];
     const fileArray = Array.from(files);
@@ -157,10 +149,16 @@ export default function FeedbackFormPage() {
     );
     const previews = await Promise.all(base64Promises);
     return previews;
-  };
+  }
 
   function onSubmit(data: InferType<typeof formSchema>) {
-    console.log({ data });
+    const payload: CreateFeedbackPayload = {
+      unit: data.unit,
+      id_category: parseStringToNumber(data.categoryId) ?? 0,
+      id_sub_category: parseStringToNumber(data.subCategoryId) ?? 0,
+      keluhan: data.feedback,
+    };
+    mutate(payload);
   }
 
   return (
@@ -208,20 +206,30 @@ export default function FeedbackFormPage() {
                     <FormControl>
                       <Select
                         value={field.value}
-                        onValueChange={field.onChange}
+                        onValueChange={(e) => {
+                          form.resetField("subCategoryId");
+                          field.onChange(e);
+                        }}
                       >
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Pilih kategori" />
+                        <SelectTrigger className="justify-start w-full">
+                          {isFeedbackCategoryListLoading && (
+                            <Loader2 className="animate-spin" />
+                          )}
+                          <div className="mr-auto">
+                            <SelectValue placeholder="Pilih kategori" />
+                          </div>
                         </SelectTrigger>
                         <SelectContent>
-                          {categoryList.map((categoryItem, categoryIdx) => (
-                            <SelectItem
-                              key={`${categoryItem.label}-${categoryIdx}`}
-                              value={categoryItem.value}
-                            >
-                              {categoryItem.label}
-                            </SelectItem>
-                          ))}
+                          {feedbackCategoryList.map(
+                            (categoryItem, categoryIdx) => (
+                              <SelectItem
+                                key={`${categoryItem.id}-${categoryIdx}`}
+                                value={`${categoryItem.id}`}
+                              >
+                                {categoryItem.name}
+                              </SelectItem>
+                            )
+                          )}
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -245,17 +253,22 @@ export default function FeedbackFormPage() {
                         value={field.value}
                         onValueChange={field.onChange}
                       >
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Pilih sub-kategori" />
+                        <SelectTrigger className="justify-start w-full">
+                          {isFeedbackSubCategoryListLoading && (
+                            <Loader2 className="animate-spin" />
+                          )}
+                          <div className="mr-auto">
+                            <SelectValue placeholder="Pilih sub-kategori" />
+                          </div>
                         </SelectTrigger>
                         <SelectContent>
-                          {subCategoryList.map(
+                          {feedbackSubCategoryList.map(
                             (subCategoryItem, subCategoryIdx) => (
                               <SelectItem
-                                key={`${subCategoryItem.label}-${subCategoryIdx}`}
-                                value={subCategoryItem.value}
+                                key={`${subCategoryItem.id}-${subCategoryIdx}`}
+                                value={`${subCategoryItem.id}`}
                               >
-                                {subCategoryItem.label}
+                                {subCategoryItem.name}
                               </SelectItem>
                             )
                           )}
@@ -282,7 +295,7 @@ export default function FeedbackFormPage() {
                       <Textarea
                         {...field}
                         rows={5}
-                        placeholder="Isikan feedback"
+                        placeholder="Tuliskan feedback Anda"
                       />
                     </FormControl>
                     <FormMessage />
@@ -304,7 +317,7 @@ export default function FeedbackFormPage() {
                         multiple
                         className="w-1/3 pt-2 px-3"
                         onChange={async (e) => {
-                          const previews = await handleImageChange(e);
+                          const previews = await onImageChange(e);
                           setImagePreviews(previews ?? []);
                           field.onChange?.(previews ?? []);
                         }}
@@ -342,8 +355,16 @@ export default function FeedbackFormPage() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="h-10 w-24">
-                Simpan
+              <Button
+                type="submit"
+                disabled={isSubmitLoading}
+                className="h-10 w-24"
+              >
+                {isSubmitLoading ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Simpan"
+                )}
               </Button>
             </form>
           </Form>
