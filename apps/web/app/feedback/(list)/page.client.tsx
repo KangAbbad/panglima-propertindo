@@ -29,10 +29,12 @@ import FeedbackImage1 from "@/assets/images/feedback-image-1.jpg";
 import { DashboardBreadcrumb } from "@/layouts/DashboardLayout/Breadcrumb";
 
 export default function FeedbackListPage() {
-  const { data: dataSource = [] } = useQuery({
+  const { data: dataSource } = useQuery({
     queryKey: [queryKey.FEEDBACK_LIST],
     queryFn: getList,
   });
+
+  const feedbackList = dataSource ?? [];
 
   return (
     <section className="space-y-5">
@@ -116,7 +118,7 @@ export default function FeedbackListPage() {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {dataSource.map((feedbackItem, feedbackIdx) => {
+        {feedbackList.map((feedbackItem, feedbackIdx) => {
           // Demo purpose only
           const id = `A12-75-111124${feedbackItem.id}`;
           const subCategories = [
