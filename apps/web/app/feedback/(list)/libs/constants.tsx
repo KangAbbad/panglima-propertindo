@@ -6,6 +6,8 @@ import { BreadcrumbLinkItem } from "@/layouts/DashboardLayout/Breadcrumb";
 export const queryKey = {
   FEEDBACK_LIST: "FEEDBACK_LIST",
   FEEDBACK_DETAIL: "FEEDBACK_DETAIL",
+  FEEDBACK_CATEGORY_LIST: "FEEDBACK_CATEGORY_LIST",
+  FEEDBACK_SUBCATEGORY_LIST: "FEEDBACK_SUBCATEGORY_LIST",
 };
 
 export const feedbackImagesLocalStorageKey = "feedbackImages";

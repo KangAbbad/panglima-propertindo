@@ -35,7 +35,7 @@ import feedbackImage3 from "@/assets/images/feedback-image-3.jpg";
 import { feedbackDetailStore } from "../(list)/libs/state";
 import { delayFor } from "@/utils/delayFor";
 import dayjs from "dayjs";
-import { statusOptionList } from "../(list)/libs/constants";
+import { statusOptionsObj } from "../(list)/libs/constants";
 
 export default function FeedbackDetailPage() {
   const router = useRouter();
@@ -83,9 +83,7 @@ export default function FeedbackDetailPage() {
   const isStatusProgress =
     status === "pending" || status === "waiting" || status === "in_progress";
   const isStatusComplete = status === "resolved";
-  const findStatus = statusOptionList.find(
-    (statusOption) => statusOption.value === status
-  );
+  const findStatus = statusOptionsObj[status ?? ""];
   const statusLabel = findStatus?.label ?? "-";
 
   const handleSelectThumb = (index: number) => {

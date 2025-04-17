@@ -1,10 +1,10 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { MessageSquare, PlusSquare, Search } from "lucide-react";
+import { Loader2, MessageSquare, PlusSquare, Search } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { FeedbackItem } from "./components/FeedbackItem";
 import {
@@ -13,9 +13,8 @@ import {
   feedbackNumbers,
   queryKey,
   statusOptionList,
-  unitOptions,
 } from "./libs/constants";
-import { getList } from "./services/get";
+import { getCategoryList, getList } from "./services/get";
 
 import { Button, buttonVariants } from "@workspace/ui/components/button";
 import { Input, InputIcon, InputRoot } from "@workspace/ui/components/input";
@@ -30,33 +29,73 @@ import ChatBubbleLeftRightIcon from "@/assets/icons/chat-bubble-left-right-icon.
 import FeedbackImage1 from "@/assets/images/feedback-image-1.jpg";
 import { DashboardBreadcrumb } from "@/layouts/DashboardLayout/Breadcrumb";
 import { staticImportToBase64 } from "@/utils/staticImportToBase64";
+import { parseStringToNumber } from "@/utils/parseStringToNumber";
+import { debounce } from "lodash-es";
 
 export default function FeedbackListPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const statusSearchParam = searchParams.get("status") as string;
+  const statusSearchParam = (searchParams.get("status") as string) ?? undefined;
+  const unitSearchParam = (searchParams.get("unit") as string) ?? undefined;
+  const keywordSearchParam =
+    (searchParams.get("keyword") as string) ?? undefined;
 
   const [feedbackImageUrl, setFeedbackImageUrl] = useState<string>("");
   const [feedbackImageUrls, setFeedbackImageUrls] = useState<{
     [key: string]: string[];
   }>({});
 
-  const { data: dataSource } = useQuery({
+  const {
+    data: feedbackCategoryList = [],
+    isFetching: isFeedbackCategoryListLoading,
+  } = useQuery({
+    queryKey: [queryKey.FEEDBACK_CATEGORY_LIST],
+    queryFn: getCategoryList,
+  });
+
+  const { data: feedbackList = [] } = useQuery({
     queryKey: [queryKey.FEEDBACK_LIST],
     queryFn: getList,
     select: (data) => {
-      if (!statusSearchParam) return data;
+      if (!unitSearchParam && !statusSearchParam) return data;
+      const findUnit = feedbackCategoryList.find(
+        (categoryItem) =>
+          categoryItem.id === parseStringToNumber(unitSearchParam)
+      );
       return data?.filter(
-        (feedbackItem) => feedbackItem.status === statusSearchParam
+        (feedbackItem) =>
+          (!statusSearchParam || feedbackItem.status === statusSearchParam) &&
+          (!unitSearchParam || feedbackItem.category === findUnit?.name) &&
+          (!keywordSearchParam ||
+            feedbackItem.keluhan
+              ?.toLowerCase()
+              .includes(keywordSearchParam.toLowerCase()))
       );
     },
   });
 
-  const feedbackList = dataSource ?? [];
+  const filterSearch = useMemo(
+    () =>
+      debounce((params: URLSearchParams) => {
+        router.replace(`/feedback?${params.toString()}`);
+      }, 350),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
-  const searchByStatus = (status: string) => {
-    router.replace(`/feedback?status=${status}`);
-  };
+  const handleFilterChange = useCallback(
+    (filterType: "unit" | "status" | "keyword", value: string) => {
+      const currentParams = new URLSearchParams(searchParams.toString());
+      if (value) {
+        currentParams.set(filterType, value);
+      } else {
+        currentParams.delete(filterType);
+      }
+      filterSearch(currentParams);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [searchParams]
+  );
 
   useEffect(() => {
     async function getImageUrl() {
@@ -112,23 +151,38 @@ export default function FeedbackListPage() {
           Daftar Feedback
         </h2>
         <div className="flex gap-5 items-center">
-          <Select>
+          <Select
+            value={unitSearchParam}
+            onValueChange={(value) => {
+              handleFilterChange("unit", value);
+            }}
+          >
             <SelectTrigger className="bg-white !h-11 w-[180px]">
-              <SelectValue placeholder="Unit" />
+              {isFeedbackCategoryListLoading && (
+                <Loader2 className="animate-spin" />
+              )}
+              <div className="line-clamp-1 mr-auto">
+                <SelectValue placeholder="Unit" />
+              </div>
             </SelectTrigger>
             <SelectContent>
-              {unitOptions.map((unitOption, unitIdx) => (
+              {feedbackCategoryList.map((categoryItem, categoryItemIdx) => (
                 <SelectItem
-                  key={`${unitOption.name}-${unitIdx}`}
-                  value={`${unitOption.id}`}
+                  key={`${categoryItem.name}-${categoryItemIdx}`}
+                  value={`${categoryItem.id}`}
                 >
-                  {unitOption.name}
+                  {categoryItem.name}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
 
-          <Select value={statusSearchParam} onValueChange={searchByStatus}>
+          <Select
+            value={statusSearchParam}
+            onValueChange={(value) => {
+              handleFilterChange("status", value);
+            }}
+          >
             <SelectTrigger className="bg-white !h-11 w-[180px]">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
@@ -149,8 +203,12 @@ export default function FeedbackListPage() {
               <Search />
             </InputIcon>
             <Input
-              className="bg-white outline-primary !h-11 w-[180px]"
               placeholder="Cari no. Tiket"
+              defaultValue={keywordSearchParam}
+              className="bg-white outline-primary !h-11 w-[180px]"
+              onChange={(e) => {
+                handleFilterChange("keyword", e.target.value);
+              }}
             />
           </InputRoot>
         </div>

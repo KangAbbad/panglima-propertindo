@@ -21,7 +21,7 @@ import { Button } from "@workspace/ui/components/button";
 import { Card, CardHeader, CardContent } from "@workspace/ui/components/card";
 import { Separator } from "@workspace/ui/components/separator";
 import { feedbackDetailStore } from "../libs/state";
-import { statusOptionList } from "../libs/constants";
+import { statusOptionsObj } from "../libs/constants";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const FeedbackItemSchema = object({
@@ -59,9 +59,7 @@ export function FeedbackItem(props: FeedbackItemType) {
   const isStatusProgress =
     status === "pending" || status === "waiting" || status === "in_progress";
   const isStatusComplete = status === "resolved";
-  const findStatus = statusOptionList.find(
-    (statusOption) => statusOption.value === status
-  );
+  const findStatus = statusOptionsObj[status ?? ""];
   const statusLabel = findStatus?.label ?? "-";
   const countRestOfSubCategories =
     subCategories.length > 2 ? subCategories.length - 2 : 0;

@@ -15,8 +15,8 @@ import { useForm } from "react-hook-form";
 import { array, InferType, object, string } from "yup";
 
 import { FeedbackTips } from "./components/FeedbackTips";
-import { queryKey } from "./libs/constants";
-import { getCategoryList, getSubCategoryList } from "./services/get";
+import { queryKey as queryKeyFeedbackList } from "../(list)/libs/constants";
+import { getCategoryList, getSubCategoryList } from "../(list)/services/get";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@workspace/ui/components/button";
@@ -95,7 +95,7 @@ export default function FeedbackFormPage() {
     data: feedbackCategoryList = [],
     isFetching: isFeedbackCategoryListLoading,
   } = useQuery({
-    queryKey: [queryKey.FEEDBACK_CATEGORY_LIST],
+    queryKey: [queryKeyFeedbackList.FEEDBACK_CATEGORY_LIST],
     queryFn: getCategoryList,
   });
 
@@ -104,7 +104,7 @@ export default function FeedbackFormPage() {
     isFetching: isFeedbackSubCategoryListLoading,
   } = useQuery({
     queryKey: [
-      queryKey.FEEDBACK_SUBCATEGORY_LIST,
+      queryKeyFeedbackList.FEEDBACK_SUBCATEGORY_LIST,
       { categoryId: watchCategoryId },
     ],
     queryFn: () => {
