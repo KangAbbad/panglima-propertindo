@@ -222,7 +222,7 @@ export function FeedbackItem(props: FeedbackItemType) {
                 )}
               </div>
             ) : (
-              <Button className="h-10 w-full">
+              <Button className="h-10 w-full" onClick={prefetchFeedbackDetail}>
                 <MessageSquare size={16} /> Beri Rating & Ulasan
               </Button>
             )}
