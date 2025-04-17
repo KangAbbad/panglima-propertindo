@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, MessageSquare, PlusSquare, Search } from "lucide-react";
+import { Loader2, PlusSquare, Search } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -10,13 +10,12 @@ import { FeedbackItem } from "./components/FeedbackItem";
 import {
   breadcrumbLinks,
   feedbackImagesLocalStorageKey,
-  feedbackNumbers,
   queryKey,
   statusOptionList,
 } from "./libs/constants";
 import { getCategoryList, getList } from "./services/get";
 
-import { Button, buttonVariants } from "@workspace/ui/components/button";
+import { buttonVariants } from "@workspace/ui/components/button";
 import { Input, InputIcon, InputRoot } from "@workspace/ui/components/input";
 import {
   Select,
@@ -25,12 +24,12 @@ import {
   SelectContent,
   SelectItem,
 } from "@workspace/ui/components/select";
-import ChatBubbleLeftRightIcon from "@/assets/icons/chat-bubble-left-right-icon.svg";
 import FeedbackImage1 from "@/assets/images/feedback-image-1.jpg";
 import { DashboardBreadcrumb } from "@/layouts/DashboardLayout/Breadcrumb";
 import { staticImportToBase64 } from "@/utils/staticImportToBase64";
 import { parseStringToNumber } from "@/utils/parseStringToNumber";
 import { debounce } from "lodash-es";
+import { FeedbackReminder } from "./components/FeedbackReminder";
 
 export default function FeedbackListPage() {
   const router = useRouter();
@@ -124,28 +123,7 @@ export default function FeedbackListPage() {
           <PlusSquare /> Buat Feedback
         </Link>
       </div>
-      <div className="border border-primary rounded-lg bg-white space-y-5 px-4 py-[26px]">
-        <div className="flex items-center gap-2">
-          <ChatBubbleLeftRightIcon />
-          <h1 className="text-foreground text-lg font-semibold">
-            Jangan Lupa Untuk Memberi Ulasan!
-          </h1>
-        </div>
-        <p className="text-sm text-muted-foreground">
-          Sepertinya Anda belum memberikan ulasan untuk Feedback yang sudah
-          selesai di bawah ini
-        </p>
-        <div className="flex items-center gap-2">
-          {feedbackNumbers.map((feedbackNumber, feedbackIdx) => (
-            <Button
-              key={`${feedbackNumber}-${feedbackIdx}`}
-              className="text-sm h-auto py-2 !px-4"
-            >
-              <MessageSquare /> {feedbackNumber}
-            </Button>
-          ))}
-        </div>
-      </div>
+      <FeedbackReminder />
       <div className="flex gap-5 items-center justify-between">
         <h2 className="text-foreground text-lg font-semibold">
           Daftar Feedback
@@ -213,37 +191,48 @@ export default function FeedbackListPage() {
           </InputRoot>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {feedbackList.map((feedbackItem, feedbackIdx) => {
-          // Demo purpose only
-          const id = `A12-75-111124${feedbackItem.id}`;
-          const subCategories = [
-            feedbackItem?.sub_category ?? "",
-            "Drainase Lingkungan",
-            "Lingkungan",
-          ];
-          const rating = feedbackIdx !== 1 ? { csa: 5, konstruksi: 5 } : null;
-          const hasReview = feedbackIdx !== 0 && !!feedbackItem.keluhan;
-          const imageUrls = feedbackImageUrls[feedbackItem.id] ?? [];
-          const imageUrl = imageUrls?.length ? imageUrls[0] : feedbackImageUrl;
+      {feedbackList.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {feedbackList.map((feedbackItem, feedbackIdx) => {
+            // Demo purpose only
+            const id = `A12-75-111124${feedbackItem.id}`;
+            const subCategories = [
+              feedbackItem?.sub_category ?? "",
+              "Drainase Lingkungan",
+              "Lingkungan",
+            ];
+            const rating = feedbackIdx !== 1 ? { csa: 5, konstruksi: 5 } : null;
+            const hasReview = feedbackIdx !== 0 && !!feedbackItem.keluhan;
+            const imageUrls = feedbackImageUrls[feedbackItem.id] ?? [];
+            const imageUrl = imageUrls?.length
+              ? imageUrls[0]
+              : feedbackImageUrl;
 
-          return (
-            <FeedbackItem
-              key={`${feedbackItem.id}-${feedbackIdx}`}
-              id={id}
-              category={feedbackItem.category}
-              subCategories={subCategories}
-              date={feedbackItem.created_at}
-              description={feedbackItem.keluhan}
-              tag={feedbackItem.unit}
-              status={feedbackItem.status}
-              rating={rating}
-              hasReview={hasReview}
-              imageUrl={imageUrl}
-            />
-          );
-        })}
-      </div>
+            return (
+              <FeedbackItem
+                key={`${feedbackItem.id}-${feedbackIdx}`}
+                id={id}
+                category={feedbackItem.category}
+                subCategories={subCategories}
+                date={feedbackItem.created_at}
+                description={feedbackItem.keluhan}
+                tag={feedbackItem.unit}
+                status={feedbackItem.status}
+                rating={rating}
+                hasReview={hasReview}
+                imageUrl={imageUrl}
+              />
+            );
+          })}
+        </div>
+      )}
+      {feedbackList.length < 1 && (
+        <div className="pt-10">
+          <h1 className="text-md text-foreground font-medium text-center">
+            Data tidak tersedia.
+          </h1>
+        </div>
+      )}
     </section>
   );
 }
