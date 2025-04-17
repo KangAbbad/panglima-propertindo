@@ -3,10 +3,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { MessageSquare, PlusSquare, Search } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 import { FeedbackItem } from "./components/FeedbackItem";
 import {
   breadcrumbLinks,
+  feedbackImagesLocalStorageKey,
   feedbackNumbers,
   queryKey,
   statusOptionList,
@@ -27,14 +29,36 @@ import {
 import ChatBubbleLeftRightIcon from "@/assets/icons/chat-bubble-left-right-icon.svg";
 import FeedbackImage1 from "@/assets/images/feedback-image-1.jpg";
 import { DashboardBreadcrumb } from "@/layouts/DashboardLayout/Breadcrumb";
+import { staticImportToBase64 } from "@/utils/staticImportToBase64";
 
 export default function FeedbackListPage() {
+  const [feedbackImageUrl, setFeedbackImageUrl] = useState<string>("");
+  const [feedbackImageUrls, setFeedbackImageUrls] = useState<{
+    [key: string]: string[];
+  }>({});
+
   const { data: dataSource } = useQuery({
     queryKey: [queryKey.FEEDBACK_LIST],
     queryFn: getList,
   });
 
   const feedbackList = dataSource ?? [];
+
+  useEffect(() => {
+    async function getImageUrl() {
+      const imageUrl = await staticImportToBase64(FeedbackImage1);
+      setFeedbackImageUrl(imageUrl);
+    }
+    getImageUrl();
+
+    const existingImagesString = localStorage.getItem(
+      feedbackImagesLocalStorageKey
+    );
+    if (existingImagesString) {
+      const existingImages = JSON.parse(existingImagesString);
+      setFeedbackImageUrls(existingImages);
+    }
+  }, []);
 
   return (
     <section className="space-y-5">
@@ -128,6 +152,8 @@ export default function FeedbackListPage() {
           ];
           const rating = feedbackIdx !== 1 ? { csa: 5, konstruksi: 5 } : null;
           const hasReview = feedbackIdx !== 0 && !!feedbackItem.keluhan;
+          const imageUrls = feedbackImageUrls[feedbackItem.id] ?? [];
+          const imageUrl = imageUrls?.length ? imageUrls[0] : feedbackImageUrl;
 
           return (
             <FeedbackItem
@@ -141,7 +167,7 @@ export default function FeedbackListPage() {
               status={statusOptionsObj[feedbackItem.status]?.value ?? 0}
               rating={rating}
               hasReview={hasReview}
-              imageUrl={FeedbackImage1}
+              imageUrl={imageUrl}
             />
           );
         })}

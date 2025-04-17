@@ -16,12 +16,7 @@ import { array, InferType, object, string } from "yup";
 
 import { FeedbackTips } from "./components/FeedbackTips";
 import { queryKey } from "./libs/constants";
-import {
-  createFeedback,
-  CreateFeedbackPayload,
-  getCategoryList,
-  getSubCategoryList,
-} from "./services/get";
+import { getCategoryList, getSubCategoryList } from "./services/get";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@workspace/ui/components/button";
@@ -51,7 +46,7 @@ import {
 } from "@workspace/ui/components/dialog";
 import { DashboardBreadcrumb } from "@/layouts/DashboardLayout/Breadcrumb";
 import { parseStringToNumber } from "@/utils/parseStringToNumber";
-import { delayFor } from "@/utils/delayFor";
+import { createFeedback, CreateFeedbackPayload } from "./services/post";
 
 const formSchema = object({
   unit: string().required("Unit wajib diisi!").default(""),
@@ -123,12 +118,31 @@ export default function FeedbackFormPage() {
   const { mutate, isPending: isSubmitLoading } = useMutation({
     mutationFn: createFeedback,
     onSuccess: async (res) => {
-      console.log({ res });
-      toast("Berhasil membuat feedback baru!", {
+      const { data, message = "Berhasil membuat feedback baru!" } = res;
+      const { id } = data;
+
+      // Set images to localstorage based on id
+      if (imagePreviews.length > 0) {
+        try {
+          const feedbackImagesKey = "feedbackImages";
+          const existingImagesString = localStorage.getItem(feedbackImagesKey);
+          const allFeedbackImages: Record<string, string[]> =
+            existingImagesString ? JSON.parse(existingImagesString) : {};
+          allFeedbackImages[id] = imagePreviews; // Store previews under the new feedback ID
+          localStorage.setItem(
+            feedbackImagesKey,
+            JSON.stringify(allFeedbackImages)
+          );
+        } catch (error) {
+          console.error("Failed to save images to localStorage:", error);
+          // Optionally show an error toast to the user
+        }
+      }
+
+      toast(message, {
         icon: <CheckCircle2 size={20} fill="#287C3E" color="#FFFFFF" />,
         descriptionClassName: "text-secondary",
       });
-      await delayFor(1500);
       router.push("/feedback");
     },
   });

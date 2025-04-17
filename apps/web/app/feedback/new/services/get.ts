@@ -46,21 +46,3 @@ export async function getSubCategoryList(
   });
   return res.data;
 }
-
-const CreateFeedbackPayload = object({
-  unit: string().required("Unit wajib diisi!").default(""),
-  id_category: number().required("Kategori wajib diisi!").default(0),
-  id_sub_category: number().required("Sub kategori wajib diisi!").default(0),
-  keluhan: string().required("Keluhan wajib diisi!").default(""),
-});
-
-export type CreateFeedbackPayload = InferType<typeof CreateFeedbackPayload>;
-
-export async function createFeedback(data: CreateFeedbackPayload) {
-  const res: AxiosResponse = await apiFetch({
-    method: "POST",
-    url: endpoints.feedback,
-    data,
-  });
-  return res.data;
-}

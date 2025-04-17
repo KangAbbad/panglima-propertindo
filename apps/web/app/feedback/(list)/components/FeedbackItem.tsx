@@ -1,3 +1,5 @@
+"use client";
+
 import dayjs from "dayjs";
 import {
   ImageIcon,
@@ -11,21 +13,20 @@ import {
   Star,
   MessageSquare,
 } from "lucide-react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
-import { object, string, mixed, number, array, boolean, InferType } from "yup";
+import { object, string, number, array, boolean, InferType } from "yup";
 
 import { Button } from "@workspace/ui/components/button";
 import { Card, CardHeader, CardContent } from "@workspace/ui/components/card";
 import { Separator } from "@workspace/ui/components/separator";
 import { feedbackDetailStore } from "../libs/state";
-import { staticImportToBase64 } from "@/utils/staticImportToBase64";
 import { statusOptionList } from "../libs/constants";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const feedbackItemSchema = object({
+const FeedbackItemSchema = object({
   id: string().required(),
-  imageUrl: mixed<StaticImageData>().nullable(),
+  imageUrl: string().nullable(),
   status: number().oneOf([1, 2]).required(),
   date: string().required(),
   category: string().required(),
@@ -38,7 +39,7 @@ const feedbackItemSchema = object({
   }).nullable(),
   hasReview: boolean().default(false),
 });
-export type FeedbackItemType = InferType<typeof feedbackItemSchema>;
+export type FeedbackItemType = InferType<typeof FeedbackItemSchema>;
 
 export function FeedbackItem(props: FeedbackItemType) {
   const {
@@ -53,7 +54,6 @@ export function FeedbackItem(props: FeedbackItemType) {
     status,
     tag,
   } = props;
-
   const { setData: setFeedbackDetailState } = feedbackDetailStore();
 
   const isStatusProgress = status === 1 || status === 3 || status === 4;
@@ -66,16 +66,8 @@ export function FeedbackItem(props: FeedbackItemType) {
     subCategories.length > 2 ? subCategories.length - 2 : 0;
   const formattedDate = dayjs(date).format("DD MMMM YYYY, HH:mm");
 
-  const prefetchFeedbackDetail = async () => {
-    const newImageUrl = imageUrl ? await staticImportToBase64(imageUrl) : null;
-    const newFeedbackDetail = {
-      ...props,
-      imageUrl: newImageUrl,
-    };
-    setFeedbackDetailState({
-      ...newFeedbackDetail,
-      imageUrl: newImageUrl as unknown as StaticImageData,
-    });
+  const prefetchFeedbackDetail = () => {
+    setFeedbackDetailState(props);
   };
 
   return (
