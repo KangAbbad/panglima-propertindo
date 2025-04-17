@@ -27,7 +27,7 @@ import { statusOptionList } from "../libs/constants";
 const FeedbackItemSchema = object({
   id: string().required(),
   imageUrl: string().nullable(),
-  status: number().oneOf([1, 2]).required(),
+  status: string().required(),
   date: string().required(),
   category: string().required(),
   subCategories: array(string()).required(),
@@ -56,12 +56,13 @@ export function FeedbackItem(props: FeedbackItemType) {
   } = props;
   const { setData: setFeedbackDetailState } = feedbackDetailStore();
 
-  const isStatusProgress = status === 1 || status === 3 || status === 4;
-  const isStatusComplete = status === 2;
+  const isStatusProgress =
+    status === "pending" || status === "waiting" || status === "in_progress";
+  const isStatusComplete = status === "resolved";
   const findStatus = statusOptionList.find(
-    (statusOption) => statusOption.id === status
+    (statusOption) => statusOption.value === status
   );
-  const statusLabel = findStatus?.name ?? "-";
+  const statusLabel = findStatus?.label ?? "-";
   const countRestOfSubCategories =
     subCategories.length > 2 ? subCategories.length - 2 : 0;
   const formattedDate = dayjs(date).format("DD MMMM YYYY, HH:mm");

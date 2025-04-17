@@ -46,30 +46,34 @@ export const unitOptions: OptionItem[] = [
   },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const StatusOptionSchema = object({
+  label: string(),
+  value: string(),
+});
+type StatusOption = InferType<typeof StatusOptionSchema>;
+
 export const statusOptionsObj: {
-  [key: string]: { label: string; value: number };
+  [key: string]: StatusOption;
 } = {
   pending: {
     label: "Belum Selesai",
-    value: 1,
+    value: "pending",
   },
   resolved: {
     label: "Selesai",
-    value: 2,
+    value: "resolved",
   },
   waiting: {
     label: "Menunggu",
-    value: 3,
+    value: "waiting",
   },
   in_progress: {
     label: "Dalam Proses",
-    value: 4,
+    value: "in_progress",
   },
 };
 
-export const statusOptionList: OptionItem[] = Object.entries(
+export const statusOptionList: StatusOption[] = Object.entries(
   statusOptionsObj
-).map(([, value]) => ({
-  id: value.value,
-  name: value.label,
-}));
+).map(([, value]) => value);

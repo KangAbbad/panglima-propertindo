@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { MessageSquare, PlusSquare, Search } from "lucide-react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { FeedbackItem } from "./components/FeedbackItem";
@@ -12,7 +13,6 @@ import {
   feedbackNumbers,
   queryKey,
   statusOptionList,
-  statusOptionsObj,
   unitOptions,
 } from "./libs/constants";
 import { getList } from "./services/get";
@@ -32,6 +32,10 @@ import { DashboardBreadcrumb } from "@/layouts/DashboardLayout/Breadcrumb";
 import { staticImportToBase64 } from "@/utils/staticImportToBase64";
 
 export default function FeedbackListPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const statusSearchParam = searchParams.get("status") as string;
+
   const [feedbackImageUrl, setFeedbackImageUrl] = useState<string>("");
   const [feedbackImageUrls, setFeedbackImageUrls] = useState<{
     [key: string]: string[];
@@ -40,9 +44,19 @@ export default function FeedbackListPage() {
   const { data: dataSource } = useQuery({
     queryKey: [queryKey.FEEDBACK_LIST],
     queryFn: getList,
+    select: (data) => {
+      if (!statusSearchParam) return data;
+      return data?.filter(
+        (feedbackItem) => feedbackItem.status === statusSearchParam
+      );
+    },
   });
 
   const feedbackList = dataSource ?? [];
+
+  const searchByStatus = (status: string) => {
+    router.replace(`/feedback?status=${status}`);
+  };
 
   useEffect(() => {
     async function getImageUrl() {
@@ -114,17 +128,17 @@ export default function FeedbackListPage() {
             </SelectContent>
           </Select>
 
-          <Select>
+          <Select value={statusSearchParam} onValueChange={searchByStatus}>
             <SelectTrigger className="bg-white !h-11 w-[180px]">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
               {statusOptionList.map((statusOption, statusIdx) => (
                 <SelectItem
-                  key={`${statusOption.name}-${statusIdx}`}
-                  value={`${statusOption.id}`}
+                  key={`${statusOption.label}-${statusIdx}`}
+                  value={`${statusOption.value}`}
                 >
-                  {statusOption.name}
+                  {statusOption.label}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -164,7 +178,7 @@ export default function FeedbackListPage() {
               date={feedbackItem.created_at}
               description={feedbackItem.keluhan}
               tag={feedbackItem.unit}
-              status={statusOptionsObj[feedbackItem.status]?.value ?? 0}
+              status={feedbackItem.status}
               rating={rating}
               hasReview={hasReview}
               imageUrl={imageUrl}

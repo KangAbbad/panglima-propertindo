@@ -80,12 +80,13 @@ export default function FeedbackDetailPage() {
     feedbackImage3,
   ];
   const newDateFormat = dayjs(date).format("DD MMMM YYYY, HH:mm");
-  const isStatusProgress = status === 1 || status === 3 || status === 4;
-  const isStatusComplete = status === 2;
+  const isStatusProgress =
+    status === "pending" || status === "waiting" || status === "in_progress";
+  const isStatusComplete = status === "resolved";
   const findStatus = statusOptionList.find(
-    (statusOption) => statusOption.id === status
+    (statusOption) => statusOption.value === status
   );
-  const statusLabel = findStatus?.name ?? "-";
+  const statusLabel = findStatus?.label ?? "-";
 
   const handleSelectThumb = (index: number) => {
     if (!feedbackImageApi || !feedbackThumbnailApi) {
